@@ -2,11 +2,17 @@ module Main               exposing (main)
 
 import Browser            exposing (Document)
 import Browser.Navigation as Nav
-import Html               exposing (Html, a, footer, h1, li, nav, text, ul)
-import Html.Attributes    exposing (classList, href)
-import Html.Lazy          exposing (lazy)
+import Element            exposing (Attribute, column, el, Element, layout, layoutWith, link, none, rgb255, row, text)
+import Element.Background as Background
+import Element.Border     as Border
+import Element.Events     as Events
+import Element.Font       as Font
+import Element.Lazy       exposing (lazy)
+import Element.Region     as Region
+import Html               exposing (Html)
 import PhotoFolders       as Folders
 import PhotoGallery       as Gallery
+import UI
 import Url                exposing (Url)
 import Url.Parser         as Parser exposing ((</>), Parser, s)
 
@@ -72,41 +78,41 @@ view model =
                         |> Html.map GotGalleryMsg
 
                 NotFound ->
-                    text "Not Found"
+                    Html.text "Not Found"
     in
     { title = "Photo Groove, SPA Style"
     , body =
-        [ lazy viewHeader model.page
+        [ layout UI.body
+            <| lazy viewHeader model.page
         , content
-        , viewFooter
+        , layout []
+            <| viewFooter
         ]
     }
 
 
-viewHeader : Page -> Html Msg
+viewHeader : Page -> Element Msg
 viewHeader page =
     let
         logo =
-            h1 [] [ text "Photo Groove" ]
+            column UI.h1 [text "Photo Groove"]
 
         links =
-            ul []
+            row []
                 [ navLink Folders { url = "/",        caption = "Folders" }
                 , navLink Gallery { url = "/gallery", caption = "Gallery" }
                 ]
 
-        navLink : Route -> { url : String, caption : String } -> Html msg
+        navLink : Route -> { url : String, caption : String } -> Element msg
         navLink route { url, caption } =
-            li
-                [ classList
-                    [ ( "active"
-                      , isActive { link = route, page = page }
-                      )
-                    ]
+            column (isActive { link = route, page = page })
+                [ link []
+                    { url = url
+                    , label = text caption
+                    }
                 ]
-                [ a [ href url ] [ text caption ] ]
     in
-    nav [] [ logo, links ]
+    row [ Region.navigation ] [ logo, links ]
 
 
 parser : Parser (Route -> a) a
@@ -118,23 +124,23 @@ parser =
         ]
 
 
-isActive : { link : Route, page : Page } -> Bool
+isActive : { link : Route, page : Page } -> List (Attribute msg)
 isActive { link, page } =
     case ( link, page ) of
-        ( Gallery        , GalleryPage ) -> True
+        ( Gallery        , GalleryPage ) -> UI.nav True
 
-        ( Gallery        , _           ) -> False
+        ( Gallery        , _           ) -> UI.nav False
 
-        ( Folders        , FoldersPage ) -> True
+        ( Folders        , FoldersPage ) -> UI.nav True
 
-        ( Folders        , _           ) -> False
+        ( Folders        , _           ) -> UI.nav False
 
-        ( SelectedPhoto _, _           ) -> False
+        ( SelectedPhoto _, _           ) -> UI.nav False
 
-viewFooter : Html msg
+viewFooter : Element msg
 viewFooter =
-    footer []
-        [ text "One is never alone with a rubber duck. -Douglas Adams" ]
+    el UI.footer
+        <| text "One is never alone with a rubber duck. -Douglas Adams"
 
 
 
