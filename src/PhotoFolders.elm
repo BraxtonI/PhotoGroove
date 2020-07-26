@@ -2,12 +2,21 @@ module PhotoFolders         exposing (Model, Msg, update, view, init)
 
 import Common               exposing (urlPrefix, Photo)
 import Dict                 exposing (Dict)
-import Html                 exposing (..)
+import Element              exposing (..)
+import Element.Background   as Background
+import Element.Border       as Border
+import Element.Events       as Events
+import Element.Font         as Font
+import Element.Input        as Input
+import Element.Lazy         as Lazy
+import Element.Region       as Region
+import Html                 exposing (Html, div, h2, h3, img, span, a, label)
 import Html.Attributes      exposing (class, href, src)
 import Html.Events          exposing (onClick)
 import Http
 import Json.Decode          as Decode exposing (Decoder, int, list, string)
 import Json.Decode.Pipeline exposing (required)
+import UI
 
 
 type Folder
@@ -83,14 +92,14 @@ update msg model =
 
 
 
-view : Model -> Html Msg
+view : Model -> Element Msg
 view model =
     let
         photoByUrl : String -> Maybe Photo
         photoByUrl url =
             Dict.get url model.photos
 
-        selectedPhoto : Html Msg
+        selectedPhoto : Element Msg
         selectedPhoto =
             case Maybe.andThen photoByUrl model.selectedPhotoUrl of
                 Just photo ->
@@ -99,54 +108,77 @@ view model =
                 Nothing ->
                     text ""
     in
-    div [ class "content" ]
-        [ div [ class "folders" ]
-            [ viewFolder End model.root
-            ]
-        , div [ class "selected-photo" ] [ selectedPhoto ]
+    row
+        UI.content
+        [ column UI.folders
+            [ viewFolder End model.root ]
+        , column UI.selectedPhoto [ selectedPhoto ]
         ]
 
 
-viewPhoto : String -> Html Msg
+viewPhoto : String -> Element Msg
 viewPhoto url =
-    a [ href ("/photos/" ++ url), class "photo", onClick (SelectPhotoUrl url) ]
-        [ text url ]
+    link
+        ( List.append
+            UI.photo
+            [ Events.onClick (SelectPhotoUrl url) ]
+        )
+        { url = ("/photos/" ++ url)
+        , label = text url }
 
 
-viewSelectedPhoto : Photo -> Html Msg
+viewSelectedPhoto : Photo -> Element Msg
 viewSelectedPhoto photo =
-    div
-        [ class "selected-photo" ]
-        [ h2    [] [ text photo.title ]
-        , img   [ src (urlPrefix ++ "photos/" ++ photo.url ++ "/full") ] []
-        , span  [] [ text (String.fromInt photo.size ++ "KB") ]
-        , h3    [] [ text "Related" ]
-        , div   [ class "related-photos" ]
+    column
+        UI.selectedPhoto
+        [ el
+            UI.h2
+            ( text photo.title )
+        , image
+            UI.image
+            { src = (urlPrefix ++ "photos/" ++ photo.url ++ "/full")
+            , description = "Selected photo."
+            }
+        , el
+            []
+            ( text (String.fromInt photo.size ++ "KB") )
+        , el
+            UI.h3
+            ( text "Related" )
+        , row
+            [ spacing 10 ]
             (List.map viewRelatedPhoto photo.relatedUrls)
         ]
 
 
-viewRelatedPhoto : String -> Html Msg
+viewRelatedPhoto : String -> Element Msg
 viewRelatedPhoto url =
-    a [ href ("/photos/" ++ url) ]
-        [ img
-            [ class "related-photo"
-            , onClick (SelectPhotoUrl url)
-            , src (urlPrefix ++ "photos/" ++ url ++ "/thumb")
-            ]
-            []
-        ]
+    el
+        UI.relatedPhoto
+        ( Element.html
+            (
+                a [ href ("/photos/" ++ url) ]
+                    [ img
+                        [ onClick (SelectPhotoUrl url)
+                        , src (urlPrefix ++ "photos/" ++ url ++ "/thumb")
+                        ]
+                        []
+                    ]
+            )
+        )
 
 
-viewFolder : FolderPath -> Folder -> Html Msg
+viewFolder : FolderPath -> Folder -> Element Msg
 viewFolder path (Folder folder) =
     let
-        viewSubfolder : Int -> Folder -> Html Msg
+        viewSubfolder : Int -> Folder -> Element Msg
         viewSubfolder index subfolder =
             viewFolder (appendIndex index path) subfolder
 
         folderLabel =
-            label [ onClick (ToggleExpanded path) ] [ text folder.name ]
+            el
+                (List.append UI.folderLabel [ Events.onClick (ToggleExpanded path) ])
+                ( text folder.name )
     in
     if folder.expanded then
         let
@@ -155,12 +187,17 @@ viewFolder path (Folder folder) =
                     (List.indexedMap viewSubfolder folder.subfolders)
                     (List.map        viewPhoto     folder.photoUrls)
         in
-        div [ class "folder expanded" ]
+        column
+            UI.expanded
             [ folderLabel
-            , div [ class "contents" ] contents
+            , column
+                []
+                contents
             ]
     else
-        div [ class "folder collapsed" ] [ folderLabel ]
+        column
+            UI.collapsed
+            [ folderLabel ]
 
 
 appendIndex : Int -> FolderPath -> FolderPath

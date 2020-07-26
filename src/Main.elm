@@ -2,14 +2,10 @@ module Main               exposing (main)
 
 import Browser            exposing (Document)
 import Browser.Navigation as Nav
-import Element            exposing (Attribute, column, el, Element, layout, layoutWith, link, none, rgb255, row, text)
-import Element.Background as Background
-import Element.Border     as Border
-import Element.Events     as Events
-import Element.Font       as Font
+import Element            exposing (..)
 import Element.Lazy       exposing (lazy)
 import Element.Region     as Region
-import Html               exposing (Html)
+import Html
 import PhotoFolders       as Folders
 import PhotoGallery       as Gallery
 import UI
@@ -71,22 +67,28 @@ view model =
             case model.page of
                 FoldersPage ->
                     Folders.view model.foldersModel
-                        |> Html.map GotFoldersMsg
+                        |> Element.map GotFoldersMsg
 
                 GalleryPage ->
-                    Gallery.view model.galleryModel
-                        |> Html.map GotGalleryMsg
+                     Element.html <|
+                         ( Gallery.view model.galleryModel
+                            |> Html.map GotGalleryMsg
+                         )
 
                 NotFound ->
-                    Html.text "Not Found"
+                    text "Not Found"
     in
     { title = "Photo Groove, SPA Style"
     , body =
-        [ layout UI.body
-            <| lazy viewHeader model.page
-        , content
-        , layout []
-            <| viewFooter
+        [ layout
+            UI.body
+            ( column
+                []
+                [ lazy viewHeader model.page
+                , content
+                , viewFooter
+                ]
+            )
         ]
     }
 
@@ -95,7 +97,7 @@ viewHeader : Page -> Element Msg
 viewHeader page =
     let
         logo =
-            column UI.h1 [text "Photo Groove"]
+            el UI.h1 (text "Photo Groove")
 
         links =
             row []
@@ -105,8 +107,10 @@ viewHeader page =
 
         navLink : Route -> { url : String, caption : String } -> Element msg
         navLink route { url, caption } =
-            column (isActive { link = route, page = page })
-                [ link []
+            column
+                (UI.nav (isActive { link = route, page = page }))
+                [ link
+                    UI.hoverUnderline
                     { url = url
                     , label = text caption
                     }
@@ -124,18 +128,18 @@ parser =
         ]
 
 
-isActive : { link : Route, page : Page } -> List (Attribute msg)
+isActive : { link : Route, page : Page } -> Bool
 isActive { link, page } =
     case ( link, page ) of
-        ( Gallery        , GalleryPage ) -> UI.nav True
+        ( Gallery        , GalleryPage ) -> True
 
-        ( Gallery        , _           ) -> UI.nav False
+        ( Gallery        , _           ) -> False
 
-        ( Folders        , FoldersPage ) -> UI.nav True
+        ( Folders        , FoldersPage ) -> True
 
-        ( Folders        , _           ) -> UI.nav False
+        ( Folders        , _           ) -> False
 
-        ( SelectedPhoto _, _           ) -> UI.nav False
+        ( SelectedPhoto _, _           ) -> False
 
 viewFooter : Element msg
 viewFooter =
