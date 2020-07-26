@@ -3,16 +3,7 @@ module PhotoFolders         exposing (Model, Msg, update, view, init)
 import Common               exposing (urlPrefix, Photo)
 import Dict                 exposing (Dict)
 import Element              exposing (..)
-import Element.Background   as Background
-import Element.Border       as Border
 import Element.Events       as Events
-import Element.Font         as Font
-import Element.Input        as Input
-import Element.Lazy         as Lazy
-import Element.Region       as Region
-import Html                 exposing (Html, div, h2, h3, img, span, a, label)
-import Html.Attributes      exposing (class, href, src)
-import Html.Events          exposing (onClick)
 import Http
 import Json.Decode          as Decode exposing (Decoder, int, list, string)
 import Json.Decode.Pipeline exposing (required)
@@ -153,19 +144,17 @@ viewSelectedPhoto photo =
 
 viewRelatedPhoto : String -> Element Msg
 viewRelatedPhoto url =
-    el
-        UI.relatedPhoto
-        ( Element.html
-            (
-                a [ href ("/photos/" ++ url) ]
-                    [ img
-                        [ onClick (SelectPhotoUrl url)
-                        , src (urlPrefix ++ "photos/" ++ url ++ "/thumb")
-                        ]
-                        []
-                    ]
+    link
+        (List.append UI.relatedPhoto [ Events.onClick (SelectPhotoUrl url) ])
+        { url = ("/photos/" ++ url)
+        , label =
+            ( image
+                []
+                { src = (urlPrefix ++ "photos/" ++ url ++ "/thumb")
+                , description = "Related photo."
+                }
             )
-        )
+        }
 
 
 viewFolder : FolderPath -> Folder -> Element Msg
