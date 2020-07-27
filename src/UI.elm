@@ -8,7 +8,6 @@ import Element.Font       as Font
 import Element.Input      as Input
 import Element.Lazy       as Lazy
 import Element.Region     as Region
-import Html               as Html
 
 
 edges : { top : Int, right : Int, bottom : Int, left : Int }
@@ -66,9 +65,9 @@ h1
 --}
 h1 : List (Attribute msg)
 h1 =
-    [ Font.size 32
+    [ Font.size   32
     , Font.bold
-    , Font.color blue
+    , Font.color  blue
     , paddingEach { edges | top = 10 , left = 5, right = 20 }
     ]
 
@@ -99,7 +98,7 @@ nav active =
     List.append
         maybeActive
         [ paddingEach { edges | top = 10, left = 15, right = 15 }
-        , Font.color white
+        , Font.color  white
         , Font.bold
         ]
 
@@ -108,8 +107,8 @@ hoverUnderline : List (Attribute msg)
 hoverUnderline =
     [
     Border.widthEach { edges | bottom = 2 }
-    , Border.color backgroundColor
-    , mouseOver  [ Border.color white ]
+    , Border.color   backgroundColor
+    , mouseOver      [ Border.color white ]
     ]
 
 
@@ -121,7 +120,7 @@ hoverUnderline =
 content : List (Attribute msg)
 content =
     [ padding 40
-    , width (px 960)
+    , width   (px 960)
     ]
 
 
@@ -150,8 +149,8 @@ content =
 --}
 folderLabel : List (Attribute msg)
 folderLabel =
-    [ paddingEach { edges | top = 6, left = 8, right = 8}
-    , mouseOver [ Background.color blue ]
+    [ paddingEach      { edges | top = 6, left = 8, right = 8}
+    , mouseOver        [ Background.color blue ]
     , Background.color grey
     , pointer
     ]
@@ -162,7 +161,7 @@ expanded =
     [ onLeft
         ( el
             [ paddingEach { edges | left = 12 } ]
-            ( text "▸" )
+            ( text "▸" ) --▸
         )
     ]
 
@@ -172,7 +171,7 @@ collapsed =
     [ onLeft
         ( el
             [ paddingEach { edges | left = 12 } ]
-            ( text "▾" )
+            ( text "▾" ) --▾
         )
     ]
 
@@ -193,8 +192,8 @@ photo : List (Attribute msg)
 photo =
     [ paddingEach { edges | top = 6, left = 8, right = 8}
     , pointer
-    , Font.color white
-    , mouseOver [ Background.color blue ]
+    , Font.color  white
+    , mouseOver   [ Background.color blue ]
     ]
 
 
@@ -218,7 +217,7 @@ photo =
 h3 : List (Attribute msg)
 h3 =
     [ paddingEach { edges | top = 60, bottom = 20 }
-    , Font.color blue
+    , Font.color  blue
     , Font.bold
     ]
 
@@ -256,7 +255,7 @@ image =
     [ Border.width 1
     , Border.solid
     , Border.color white
-    , spacing 5
+    , spacing      5
     ]
 
 
@@ -285,9 +284,118 @@ relatedPhoto =
 
 h2 : List (Attribute msg)
 h2 =
-    [ Font.size 24
+    [ Font.size   24
     , paddingEach { edges | top = 13, bottom = 13 }
     , Font.bold
+    ]
+
+
+
+{--
+button
+  float: right; background-color: #60b5cc; border: 0; color: rgb(44, 44, 44);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px 30px;
+
+button:hover
+  background-color: white;
+--}
+button : List (Attribute msg)
+button =
+    [ Background.color blue
+    , alignRight
+    , Border.widthEach edges
+    , Font.color       backgroundColor
+    , Font.size        24
+    , pointer
+    , paddingEach      { edges | top = 10, left = 30, right = 30 }
+    , mouseOver        [ Background.color white ]
+    ]
+
+
+{--
+.activity
+  position: absolute;
+  top: 40px;
+  right: 100px;
+--}
+activity : List (Attribute msg)
+activity =
+    [ alignRight
+    ]
+
+
+{--
+.filters
+  width: 318px;
+  float: right;
+--}
+filters : List (Attribute msg)
+filters =
+    [ width (px 318)
+    , alignRight
+    ]
+
+
+{--
+#choose-size
+  float: left;
+  margin-left: 20px;
+
+#choose-size > span
+  display: inline-block;
+  margin: 0 10px;
+--}
+chosenSize : List (Attribute msg)
+chosenSize =
+    [ alignLeft
+    , paddingEach { edges | left = 20 }
+    ]
+
+
+chosenSizeSpan : List(Attribute msg)
+chosenSizeSpan =
+    [ alignLeft
+    , paddingEach { edges | left = 10, right = 10 }
+    ]
+
+
+{--
+#thumbnails { width: 440px; float: left; clear: both; }
+#thumbnails.small img { width: 50px; }
+#thumbnails.med img { width: 100px; }
+#thumbnails.large img { width: 200px; }
+--}
+thumbnails : List (Attribute msg)
+thumbnails =
+    [ width (px 440)
+    , alignLeft
+    ]
+
+
+thumbSize : String -> List (Attribute msg)
+thumbSize size =
+    case size of
+        "small" ->
+            [ width (px 50) ]
+
+        "med" ->
+            [ width (px 100) ]
+
+        "large" ->
+            [ width (px 200) ]
+
+        _ ->
+            [ width (px 100) ]
+
+
+{--
+.selected { margin: 0; border: 6px solid #60b5cc; }
+--}
+selected : List (Attribute msg)
+selected =
+    [
     ]
 
 

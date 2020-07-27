@@ -101,7 +101,11 @@ view model =
     in
     row
         UI.content
-        [ column UI.folders
+        [ column
+            ( UI.folders
+            ++ [explain Debug.todo]
+            )
+            --(List.append UI.folders [explain Debug.todo] )
             [ viewFolder End model.root ]
         , column UI.selectedPhoto [ selectedPhoto ]
         ]
@@ -125,14 +129,17 @@ viewSelectedPhoto photo =
         [ el
             UI.h2
             ( text photo.title )
-        , image
-            UI.image
-            { src = (urlPrefix ++ "photos/" ++ photo.url ++ "/full")
-            , description = "Selected photo."
-            }
-        , el
+        , column
             []
-            ( text (String.fromInt photo.size ++ "KB") )
+            [ image
+                UI.image
+                { src = (urlPrefix ++ "photos/" ++ photo.url ++ "/full")
+                , description = "Selected photo."
+                }
+            , el
+                [centerX]
+                ( text (String.fromInt photo.size ++ "KB") )
+            ]
         , el
             UI.h3
             ( text "Related" )

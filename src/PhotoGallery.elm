@@ -2,14 +2,23 @@ port module PhotoGallery exposing (init, Model, Msg, subscriptions, update, view
 
 import Browser
 import Common               exposing (urlPrefix, Photo)
-import Html                 exposing (..)
-import Html.Attributes      as Attr exposing (checked, class, classList, id, name, src, title, type_)
+import Element              exposing (..)
+import Element.Background   as Background
+import Element.Border       as Border
+import Element.Events       as Events
+import Element.Font         as Font
+import Element.Input        as Input
+import Element.Lazy         as Lazy
+import Element.Region       as Region
+import Html                 exposing (Html, div, canvas, label, input, node)
+import Html.Attributes      as Attr exposing (checked, class, id, name, type_)
 import Html.Events          exposing (on, onClick)
 import Http
 import Json.Decode          exposing (Decoder, at, string, int, list, succeed)
 import Json.Decode.Pipeline exposing (optional, required)
 import Json.Encode          as Encode
 import Random
+import UI
 
 
 
@@ -17,7 +26,7 @@ main : Program Float Model Msg
 main =
     Browser.element
         { init          = init
-        , view          = view
+        , view          = (\_ -> div [] [])
         , update        = update
         , subscriptions = subscriptions
         }
@@ -74,9 +83,9 @@ type Msg
 
 
 
-view : Model -> Html Msg
+view : Model -> Element Msg
 view model =
-    div [ class "content" ] <|
+    row UI.content <|
         case model.status of
             Loaded photos selectedUrl ->
                 viewLoaded photos selectedUrl model
@@ -88,48 +97,72 @@ view model =
                 [ text ("Error: " ++ errorMessage) ]
 
 
-viewLoaded : List Photo -> String -> Model -> List (Html Msg)
+viewLoaded : List Photo -> String -> Model -> List (Element Msg)
 viewLoaded photos selectedUrl model =
-    [ button
-        [   onClick  ClickedSurpriseMe ]
-        [   text     "Surprise Me!"    ]
-    , div [ class    "activity"        ] [ text model.activity ]
-    , div [ class    "filters"         ]
+    [ Input.button
+        UI.button
+        { onPress = Just ClickedSurpriseMe
+        , label   = (text "Surprise Me!")
+        }
+    , column
+        UI.activity
+        [ text model.activity ]
+    , column
+        UI.filters
         [ viewFilter SlidHue    "Hue"    model.hue
         , viewFilter SlidRipple "Ripple" model.ripple
         , viewFilter SlidNoise  "Noise"  model.noise
         ]
-    , h3 []  [ text "Thumbnail Size:" ]
-    , div    [ id   "choose-size" ]
+    , column
+        UI.h3
+        [ text "Thumbnail Size:" ]
+    , column
+        UI.chosenSize
         (List.map (viewSizeChooser model.chosenSize) [ Small, Medium, Large ])
-    , div    [ id   "thumbnails",  class (sizeToString model.chosenSize) ]
-        (List.map (viewThumbnail   selectedUrl) photos)
-    , canvas [ id   "main-canvas", class "large" ] []
+    , column
+        UI.thumbnails
+        (List.map (viewThumbnail selectedUrl (sizeToString model.chosenSize)) photos)
+    , Element.html (canvas
+        [ id "main-canvas", class "large" ]
+        [])
     ]
 
 
-viewThumbnail : String -> Photo -> Html Msg
-viewThumbnail selectedUrl thumb =
-    img
-        [ src (urlPrefix ++ thumb.url)
-        , title (thumb.title ++ " [" ++ String.fromInt thumb.size ++ " KB]")
-        , classList [ ( "selected", selectedUrl == thumb.url ) ]
-           , onClick (ClickedPhoto thumb.url)
-        ]
-        []
+viewThumbnail : String -> String -> Photo -> Element Msg
+viewThumbnail selectedUrl size thumb =
+    image
+        ( List.append
+            ( if selectedUrl == thumb.url then
+                  UI.selected
+              else
+                  []
+            )
+            ( List.append
+                (UI.thumbSize size)
+                [ Events.onClick (ClickedPhoto thumb.url) ]
+            )
+        )
+        { src = (urlPrefix ++ thumb.url)
+        , description = (thumb.title ++ " [" ++ String.fromInt thumb.size ++ " KB]")
+        }
 
 
-viewSizeChooser : ThumbnailSize -> ThumbnailSize -> Html Msg
+viewSizeChooser : ThumbnailSize -> ThumbnailSize -> Element Msg
 viewSizeChooser chosenSize size =
-    label []
+    {--Input.radio
+        []
+        { onChange =
+        ,
+        }--}
+    Element.html (label []
         [ input [ type_ "radio", name "size", onClick (ClickedSize size) ,
             if size == chosenSize then
                 checked True
             else
                 checked False
         ] []
-        , text (sizeToString size)
-        ]
+        , Html.text (sizeToString size)
+        ])
 
 
 sizeToString : ThumbnailSize -> String
@@ -284,25 +317,25 @@ reload newModel =
     applyFilters newModel
 
 
-viewFilter : (Int -> Msg) -> String -> Int -> Html Msg
+viewFilter : (Int -> Msg) -> String -> Int -> Element Msg
 viewFilter toMsg name magnitude =
-    div [ class "filter-slider" ]
-        [ label [] [ text name ]
+    Element.html (div [ class "filter-slider" ]
+        [ label [] [ Html.text name ]
         , rangeSlider
             [ Attr.max "11"
             , Attr.property "val" (Encode.int magnitude)
             , onSlide toMsg
             ]
             []
-        , label [] [ text (String.fromInt magnitude) ]
-        ]
+        , label [] [ Html.text (String.fromInt magnitude) ]
+        ])
 
 
 rangeSlider attributes children =
     node "range-slider" attributes children
 
 
-onSlide : (Int -> msg) -> Attribute msg
+onSlide : (Int -> msg) -> Html.Attribute msg
 onSlide toMsg =
     at [ "detail", "userSlidTo" ] int
         |> Json.Decode.map toMsg

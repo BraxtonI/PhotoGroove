@@ -70,10 +70,8 @@ view model =
                         |> Element.map GotFoldersMsg
 
                 GalleryPage ->
-                     Element.html <|
-                         ( Gallery.view model.galleryModel
-                            |> Html.map GotGalleryMsg
-                         )
+                     Gallery.view model.galleryModel
+                        |> Element.map GotGalleryMsg
 
                 NotFound ->
                     text "Not Found"

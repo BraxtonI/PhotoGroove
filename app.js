@@ -12975,17 +12975,6 @@ var $mdgriffith$elm_ui$Element$column = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
 	});
-var $elm$core$Basics$always = F2(
-	function (a, _v0) {
-		return a;
-	});
-var $elm$core$Basics$composeL = F3(
-	function (g, f, x) {
-		return g(
-			f(x));
-	});
-var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
-var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
 var $mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
 	function (a, b) {
 		return {$: 'OnlyDynamic', a: a, b: b};
@@ -13195,6 +13184,10 @@ var $mdgriffith$elm_ui$Element$layoutWith = F3(
 	});
 var $mdgriffith$elm_ui$Element$layout = $mdgriffith$elm_ui$Element$layoutWith(
 	{options: _List_Nil});
+var $elm$core$Basics$always = F2(
+	function (a, _v0) {
+		return a;
+	});
 var $mdgriffith$elm_ui$Element$Lazy$embed = function (x) {
 	switch (x.$) {
 		case 'Unstyled':
@@ -13235,6 +13228,11 @@ var $mdgriffith$elm_ui$Internal$Model$Empty = {$: 'Empty'};
 var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
 	return {$: 'Text', a: a};
 };
+var $elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
+	});
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $mdgriffith$elm_ui$Internal$Model$map = F2(
 	function (fn, el) {
@@ -13267,7 +13265,6 @@ var $mdgriffith$elm_ui$Internal$Model$map = F2(
 		}
 	});
 var $mdgriffith$elm_ui$Element$map = $mdgriffith$elm_ui$Internal$Model$map;
-var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $mdgriffith$elm_ui$Element$text = function (content) {
 	return $mdgriffith$elm_ui$Internal$Model$Text(content);
 };
@@ -13309,6 +13306,9 @@ var $author$project$UI$content = _List_fromArray(
 		$mdgriffith$elm_ui$Element$width(
 		$mdgriffith$elm_ui$Element$px(960))
 	]);
+var $mdgriffith$elm_ui$Element$explain = function (_v0) {
+	return $mdgriffith$elm_ui$Internal$Model$htmlClass('explain');
+};
 var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
 	return {$: 'AlignX', a: a};
 };
@@ -13368,6 +13368,7 @@ var $author$project$UI$selectedPhoto = _List_fromArray(
 		$mdgriffith$elm_ui$Element$width(
 		$mdgriffith$elm_ui$Element$px(600))
 	]);
+var $elm$core$Debug$todo = _Debug_todo;
 var $author$project$PhotoFolders$ToggleExpanded = function (a) {
 	return {$: 'ToggleExpanded', a: a};
 };
@@ -13743,6 +13744,8 @@ var $author$project$PhotoFolders$viewFolder = F2(
 					[folderLabel]));
 		}
 	});
+var $mdgriffith$elm_ui$Internal$Model$CenterX = {$: 'CenterX'};
+var $mdgriffith$elm_ui$Element$centerX = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$CenterX);
 var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
 var $mdgriffith$elm_ui$Element$Font$bold = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.bold);
 var $mdgriffith$elm_ui$Element$Font$size = function (i) {
@@ -13875,8 +13878,6 @@ var $author$project$UI$image = _List_fromArray(
 		$mdgriffith$elm_ui$Element$Border$color($author$project$UI$white),
 		$mdgriffith$elm_ui$Element$spacing(5)
 	]);
-var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$html$Html$img = _VirtualDom_node('img');
 var $author$project$UI$relatedPhoto = A2(
 	$elm$core$List$append,
 	$author$project$UI$image,
@@ -13892,27 +13893,22 @@ var $author$project$UI$relatedPhoto = A2(
 		]));
 var $author$project$PhotoFolders$viewRelatedPhoto = function (url) {
 	return A2(
-		$mdgriffith$elm_ui$Element$el,
-		$author$project$UI$relatedPhoto,
-		$mdgriffith$elm_ui$Element$html(
-			A2(
-				$elm$html$Html$a,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$href('/photos/' + url)
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$img,
-						_List_fromArray(
-							[
-								$elm$html$Html$Events$onClick(
-								$author$project$PhotoFolders$SelectPhotoUrl(url)),
-								$elm$html$Html$Attributes$src($author$project$Common$urlPrefix + ('photos/' + (url + '/thumb')))
-							]),
-						_List_Nil)
-					]))));
+		$mdgriffith$elm_ui$Element$link,
+		A2(
+			$elm$core$List$append,
+			$author$project$UI$relatedPhoto,
+			_List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$Events$onClick(
+					$author$project$PhotoFolders$SelectPhotoUrl(url))
+				])),
+		{
+			label: A2(
+				$mdgriffith$elm_ui$Element$image,
+				_List_Nil,
+				{description: 'Related photo.', src: $author$project$Common$urlPrefix + ('photos/' + (url + '/thumb'))}),
+			url: '/photos/' + url
+		});
 };
 var $author$project$PhotoFolders$viewSelectedPhoto = function (photo) {
 	return A2(
@@ -13925,14 +13921,21 @@ var $author$project$PhotoFolders$viewSelectedPhoto = function (photo) {
 				$author$project$UI$h2,
 				$mdgriffith$elm_ui$Element$text(photo.title)),
 				A2(
-				$mdgriffith$elm_ui$Element$image,
-				$author$project$UI$image,
-				{description: 'Selected photo.', src: $author$project$Common$urlPrefix + ('photos/' + (photo.url + '/full'))}),
-				A2(
-				$mdgriffith$elm_ui$Element$el,
+				$mdgriffith$elm_ui$Element$column,
 				_List_Nil,
-				$mdgriffith$elm_ui$Element$text(
-					$elm$core$String$fromInt(photo.size) + 'KB')),
+				_List_fromArray(
+					[
+						A2(
+						$mdgriffith$elm_ui$Element$image,
+						$author$project$UI$image,
+						{description: 'Selected photo.', src: $author$project$Common$urlPrefix + ('photos/' + (photo.url + '/full'))}),
+						A2(
+						$mdgriffith$elm_ui$Element$el,
+						_List_fromArray(
+							[$mdgriffith$elm_ui$Element$centerX]),
+						$mdgriffith$elm_ui$Element$text(
+							$elm$core$String$fromInt(photo.size) + 'KB'))
+					])),
 				A2(
 				$mdgriffith$elm_ui$Element$el,
 				$author$project$UI$h3,
@@ -13966,7 +13969,18 @@ var $author$project$PhotoFolders$view = function (model) {
 			[
 				A2(
 				$mdgriffith$elm_ui$Element$column,
-				$author$project$UI$folders,
+				_Utils_ap(
+					$author$project$UI$folders,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$explain(
+							_Debug_todo(
+								'PhotoFolders',
+								{
+									start: {line: 106, column: 25},
+									end: {line: 106, column: 35}
+								}))
+						])),
 				_List_fromArray(
 					[
 						A2($author$project$PhotoFolders$viewFolder, $author$project$PhotoFolders$End, model.root)
@@ -13990,88 +14004,11 @@ var $author$project$PhotoGallery$SlidRipple = function (a) {
 	return {$: 'SlidRipple', a: a};
 };
 var $author$project$PhotoGallery$Small = {$: 'Small'};
-var $elm$html$Html$button = _VirtualDom_node('button');
-var $elm$html$Html$canvas = _VirtualDom_node('canvas');
-var $elm$html$Html$h3 = _VirtualDom_node('h3');
-var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
-var $author$project$PhotoGallery$sizeToString = function (size) {
-	switch (size.$) {
-		case 'Small':
-			return 'small';
-		case 'Medium':
-			return 'med';
-		default:
-			return 'large';
-	}
-};
-var $elm$json$Json$Encode$int = _Json_wrap;
-var $elm$html$Html$label = _VirtualDom_node('label');
-var $elm$html$Html$Attributes$max = $elm$html$Html$Attributes$stringProperty('max');
-var $elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
-	});
-var $author$project$PhotoGallery$onSlide = function (toMsg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'slide',
-		A2(
-			$elm$json$Json$Decode$map,
-			toMsg,
-			A2(
-				$elm$json$Json$Decode$at,
-				_List_fromArray(
-					['detail', 'userSlidTo']),
-				$elm$json$Json$Decode$int)));
-};
-var $elm$html$Html$Attributes$property = $elm$virtual_dom$VirtualDom$property;
-var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
-var $author$project$PhotoGallery$rangeSlider = F2(
-	function (attributes, children) {
-		return A3($elm$html$Html$node, 'range-slider', attributes, children);
-	});
-var $author$project$PhotoGallery$viewFilter = F3(
-	function (toMsg, name, magnitude) {
-		return A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('filter-slider')
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$label,
-					_List_Nil,
-					_List_fromArray(
-						[
-							$elm$html$Html$text(name)
-						])),
-					A2(
-					$author$project$PhotoGallery$rangeSlider,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$max('11'),
-							A2(
-							$elm$html$Html$Attributes$property,
-							'val',
-							$elm$json$Json$Encode$int(magnitude)),
-							$author$project$PhotoGallery$onSlide(toMsg)
-						]),
-					_List_Nil),
-					A2(
-					$elm$html$Html$label,
-					_List_Nil,
-					_List_fromArray(
-						[
-							$elm$html$Html$text(
-							$elm$core$String$fromInt(magnitude))
-						]))
-				]));
-	});
-var $author$project$PhotoGallery$ClickedSize = function (a) {
-	return {$: 'ClickedSize', a: a};
-};
+var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
+var $mdgriffith$elm_ui$Element$alignRight = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Right);
+var $author$project$UI$activity = _List_fromArray(
+	[$mdgriffith$elm_ui$Element$alignRight]);
+var $mdgriffith$elm_ui$Internal$Model$Button = {$: 'Button'};
 var $elm$json$Json$Encode$bool = _Json_wrap;
 var $elm$html$Html$Attributes$boolProperty = F2(
 	function (key, bool) {
@@ -14080,193 +14017,111 @@ var $elm$html$Html$Attributes$boolProperty = F2(
 			key,
 			$elm$json$Json$Encode$bool(bool));
 	});
-var $elm$html$Html$Attributes$checked = $elm$html$Html$Attributes$boolProperty('checked');
-var $elm$html$Html$input = _VirtualDom_node('input');
-var $elm$html$Html$Attributes$name = $elm$html$Html$Attributes$stringProperty('name');
-var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
-var $author$project$PhotoGallery$viewSizeChooser = F2(
-	function (chosenSize, size) {
-		return A2(
-			$elm$html$Html$label,
-			_List_Nil,
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$input,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$type_('radio'),
-							$elm$html$Html$Attributes$name('size'),
-							$elm$html$Html$Events$onClick(
-							$author$project$PhotoGallery$ClickedSize(size)),
-							_Utils_eq(size, chosenSize) ? $elm$html$Html$Attributes$checked(true) : $elm$html$Html$Attributes$checked(false)
-						]),
-					_List_Nil),
-					$elm$html$Html$text(
-					$author$project$PhotoGallery$sizeToString(size))
-				]));
-	});
-var $author$project$PhotoGallery$ClickedPhoto = function (a) {
-	return {$: 'ClickedPhoto', a: a};
+var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
+var $mdgriffith$elm_ui$Element$Input$hasFocusStyle = function (attr) {
+	if (((attr.$ === 'StyleClass') && (attr.b.$ === 'PseudoSelector')) && (attr.b.a.$ === 'Focus')) {
+		var _v1 = attr.b;
+		var _v2 = _v1.a;
+		return true;
+	} else {
+		return false;
+	}
 };
-var $elm$html$Html$Attributes$classList = function (classes) {
-	return $elm$html$Html$Attributes$class(
-		A2(
-			$elm$core$String$join,
-			' ',
+var $mdgriffith$elm_ui$Element$Input$focusDefault = function (attrs) {
+	return A2($elm$core$List$any, $mdgriffith$elm_ui$Element$Input$hasFocusStyle, attrs) ? $mdgriffith$elm_ui$Internal$Model$NoAttribute : $mdgriffith$elm_ui$Internal$Model$htmlClass('focusable');
+};
+var $mdgriffith$elm_ui$Element$Input$enter = 'Enter';
+var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
+	return {$: 'MayPreventDefault', a: a};
+};
+var $elm$html$Html$Events$preventDefaultOn = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$MayPreventDefault(decoder));
+	});
+var $mdgriffith$elm_ui$Element$Input$onKey = F2(
+	function (desiredCode, msg) {
+		var decode = function (code) {
+			return _Utils_eq(code, desiredCode) ? $elm$json$Json$Decode$succeed(msg) : $elm$json$Json$Decode$fail('Not the enter key');
+		};
+		var isKey = A2(
+			$elm$json$Json$Decode$andThen,
+			decode,
+			A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+		return $mdgriffith$elm_ui$Internal$Model$Attr(
 			A2(
-				$elm$core$List$map,
-				$elm$core$Tuple$first,
-				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
+				$elm$html$Html$Events$preventDefaultOn,
+				'keyup',
+				A2(
+					$elm$json$Json$Decode$map,
+					function (fired) {
+						return _Utils_Tuple2(fired, true);
+					},
+					isKey)));
+	});
+var $mdgriffith$elm_ui$Element$Input$onEnter = function (msg) {
+	return A2($mdgriffith$elm_ui$Element$Input$onKey, $mdgriffith$elm_ui$Element$Input$enter, msg);
 };
-var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
-var $author$project$PhotoGallery$viewThumbnail = F2(
-	function (selectedUrl, thumb) {
-		return A2(
-			$elm$html$Html$img,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$src(
-					_Utils_ap($author$project$Common$urlPrefix, thumb.url)),
-					$elm$html$Html$Attributes$title(
-					thumb.title + (' [' + ($elm$core$String$fromInt(thumb.size) + ' KB]'))),
-					$elm$html$Html$Attributes$classList(
-					_List_fromArray(
-						[
-							_Utils_Tuple2(
-							'selected',
-							_Utils_eq(selectedUrl, thumb.url))
-						])),
-					$elm$html$Html$Events$onClick(
-					$author$project$PhotoGallery$ClickedPhoto(thumb.url))
-				]),
-			_List_Nil);
-	});
-var $author$project$PhotoGallery$viewLoaded = F3(
-	function (photos, selectedUrl, model) {
-		return _List_fromArray(
-			[
-				A2(
-				$elm$html$Html$button,
-				_List_fromArray(
-					[
-						$elm$html$Html$Events$onClick($author$project$PhotoGallery$ClickedSurpriseMe)
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Surprise Me!')
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('activity')
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text(model.activity)
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('filters')
-					]),
-				_List_fromArray(
-					[
-						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidHue, 'Hue', model.hue),
-						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidRipple, 'Ripple', model.ripple),
-						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidNoise, 'Noise', model.noise)
-					])),
-				A2(
-				$elm$html$Html$h3,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Thumbnail Size:')
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$id('choose-size')
-					]),
-				A2(
-					$elm$core$List$map,
-					$author$project$PhotoGallery$viewSizeChooser(model.chosenSize),
-					_List_fromArray(
-						[$author$project$PhotoGallery$Small, $author$project$PhotoGallery$Medium, $author$project$PhotoGallery$Large]))),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$id('thumbnails'),
-						$elm$html$Html$Attributes$class(
-						$author$project$PhotoGallery$sizeToString(model.chosenSize))
-					]),
-				A2(
-					$elm$core$List$map,
-					$author$project$PhotoGallery$viewThumbnail(selectedUrl),
-					photos)),
-				A2(
-				$elm$html$Html$canvas,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$id('main-canvas'),
-						$elm$html$Html$Attributes$class('large')
-					]),
-				_List_Nil)
-			]);
-	});
-var $author$project$PhotoGallery$view = function (model) {
+var $elm$html$Html$Attributes$tabindex = function (n) {
 	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('content')
-			]),
-		function () {
-			var _v0 = model.status;
-			switch (_v0.$) {
-				case 'Loaded':
-					var photos = _v0.a;
-					var selectedUrl = _v0.b;
-					return A3($author$project$PhotoGallery$viewLoaded, photos, selectedUrl, model);
-				case 'Loading':
-					return _List_Nil;
-				default:
-					var errorMessage = _v0.a;
-					return _List_fromArray(
-						[
-							$elm$html$Html$text('Error: ' + errorMessage)
-						]);
-			}
-		}());
+		_VirtualDom_attribute,
+		'tabIndex',
+		$elm$core$String$fromInt(n));
 };
-var $mdgriffith$elm_ui$Internal$Model$ContentInfo = {$: 'ContentInfo'};
-var $mdgriffith$elm_ui$Element$Region$footer = $mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$ContentInfo);
-var $author$project$UI$footer = _List_fromArray(
-	[
-		$mdgriffith$elm_ui$Element$Font$color(
-		A3($mdgriffith$elm_ui$Element$rgb255, 187, 187, 187)),
-		$mdgriffith$elm_ui$Element$paddingEach(
-		{bottom: 20, left: 20, right: 20, top: 60}),
-		$mdgriffith$elm_ui$Element$Region$footer
-	]);
-var $author$project$Main$viewFooter = A2(
-	$mdgriffith$elm_ui$Element$el,
-	$author$project$UI$footer,
-	$mdgriffith$elm_ui$Element$text('One is never alone with a rubber duck. -Douglas Adams'));
-var $author$project$UI$h1 = _List_fromArray(
-	[
-		$mdgriffith$elm_ui$Element$Font$size(32),
-		$mdgriffith$elm_ui$Element$Font$bold,
-		$mdgriffith$elm_ui$Element$Font$color($author$project$UI$blue),
-		$mdgriffith$elm_ui$Element$paddingEach(
-		_Utils_update(
-			$author$project$UI$edges,
-			{left: 5, right: 20, top: 10}))
-	]);
+var $mdgriffith$elm_ui$Element$Input$button = F2(
+	function (attrs, _v0) {
+		var onPress = _v0.onPress;
+		var label = _v0.label;
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.seButton + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.noTextSelection)))))),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$pointer,
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Element$Input$focusDefault(attrs),
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Button),
+									A2(
+										$elm$core$List$cons,
+										$mdgriffith$elm_ui$Internal$Model$Attr(
+											$elm$html$Html$Attributes$tabindex(0)),
+										function () {
+											if (onPress.$ === 'Nothing') {
+												return A2(
+													$elm$core$List$cons,
+													$mdgriffith$elm_ui$Internal$Model$Attr(
+														$elm$html$Html$Attributes$disabled(true)),
+													attrs);
+											} else {
+												var msg = onPress.a;
+												return A2(
+													$elm$core$List$cons,
+													$mdgriffith$elm_ui$Element$Events$onClick(msg),
+													A2(
+														$elm$core$List$cons,
+														$mdgriffith$elm_ui$Element$Input$onEnter(msg),
+														attrs));
+											}
+										}()))))))),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[label])));
+	});
 var $mdgriffith$elm_ui$Element$Border$widthXY = F2(
 	function (x, y) {
 		return A2(
@@ -14296,6 +14151,315 @@ var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
 			bottom,
 			left));
 };
+var $author$project$UI$button = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$Background$color($author$project$UI$blue),
+		$mdgriffith$elm_ui$Element$alignRight,
+		$mdgriffith$elm_ui$Element$Border$widthEach($author$project$UI$edges),
+		$mdgriffith$elm_ui$Element$Font$color($author$project$UI$backgroundColor),
+		$mdgriffith$elm_ui$Element$Font$size(24),
+		$mdgriffith$elm_ui$Element$pointer,
+		$mdgriffith$elm_ui$Element$paddingEach(
+		_Utils_update(
+			$author$project$UI$edges,
+			{left: 30, right: 30, top: 10})),
+		$mdgriffith$elm_ui$Element$mouseOver(
+		_List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Background$color($author$project$UI$white)
+			]))
+	]);
+var $elm$html$Html$canvas = _VirtualDom_node('canvas');
+var $author$project$UI$chosenSize = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$alignLeft,
+		$mdgriffith$elm_ui$Element$paddingEach(
+		_Utils_update(
+			$author$project$UI$edges,
+			{left: 20}))
+	]);
+var $author$project$UI$filters = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$width(
+		$mdgriffith$elm_ui$Element$px(318)),
+		$mdgriffith$elm_ui$Element$alignRight
+	]);
+var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
+var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
+var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
+var $author$project$PhotoGallery$sizeToString = function (size) {
+	switch (size.$) {
+		case 'Small':
+			return 'small';
+		case 'Medium':
+			return 'med';
+		default:
+			return 'large';
+	}
+};
+var $author$project$UI$thumbnails = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$width(
+		$mdgriffith$elm_ui$Element$px(440)),
+		$mdgriffith$elm_ui$Element$alignLeft
+	]);
+var $elm$json$Json$Encode$int = _Json_wrap;
+var $elm$html$Html$label = _VirtualDom_node('label');
+var $elm$html$Html$Attributes$max = $elm$html$Html$Attributes$stringProperty('max');
+var $elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
+	});
+var $author$project$PhotoGallery$onSlide = function (toMsg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'slide',
+		A2(
+			$elm$json$Json$Decode$map,
+			toMsg,
+			A2(
+				$elm$json$Json$Decode$at,
+				_List_fromArray(
+					['detail', 'userSlidTo']),
+				$elm$json$Json$Decode$int)));
+};
+var $elm$html$Html$Attributes$property = $elm$virtual_dom$VirtualDom$property;
+var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
+var $author$project$PhotoGallery$rangeSlider = F2(
+	function (attributes, children) {
+		return A3($elm$html$Html$node, 'range-slider', attributes, children);
+	});
+var $author$project$PhotoGallery$viewFilter = F3(
+	function (toMsg, name, magnitude) {
+		return $mdgriffith$elm_ui$Element$html(
+			A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('filter-slider')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$label,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(name)
+							])),
+						A2(
+						$author$project$PhotoGallery$rangeSlider,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$max('11'),
+								A2(
+								$elm$html$Html$Attributes$property,
+								'val',
+								$elm$json$Json$Encode$int(magnitude)),
+								$author$project$PhotoGallery$onSlide(toMsg)
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$label,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								$elm$core$String$fromInt(magnitude))
+							]))
+					])));
+	});
+var $author$project$PhotoGallery$ClickedSize = function (a) {
+	return {$: 'ClickedSize', a: a};
+};
+var $elm$html$Html$Attributes$checked = $elm$html$Html$Attributes$boolProperty('checked');
+var $elm$html$Html$input = _VirtualDom_node('input');
+var $elm$html$Html$Attributes$name = $elm$html$Html$Attributes$stringProperty('name');
+var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
+var $author$project$PhotoGallery$viewSizeChooser = F2(
+	function (chosenSize, size) {
+		return $mdgriffith$elm_ui$Element$html(
+			A2(
+				$elm$html$Html$label,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$type_('radio'),
+								$elm$html$Html$Attributes$name('size'),
+								$elm$html$Html$Events$onClick(
+								$author$project$PhotoGallery$ClickedSize(size)),
+								_Utils_eq(size, chosenSize) ? $elm$html$Html$Attributes$checked(true) : $elm$html$Html$Attributes$checked(false)
+							]),
+						_List_Nil),
+						$elm$html$Html$text(
+						$author$project$PhotoGallery$sizeToString(size))
+					])));
+	});
+var $author$project$PhotoGallery$ClickedPhoto = function (a) {
+	return {$: 'ClickedPhoto', a: a};
+};
+var $author$project$UI$selected = _List_Nil;
+var $author$project$UI$thumbSize = function (size) {
+	switch (size) {
+		case 'small':
+			return _List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(50))
+				]);
+		case 'med':
+			return _List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(100))
+				]);
+		case 'large':
+			return _List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(200))
+				]);
+		default:
+			return _List_fromArray(
+				[
+					$mdgriffith$elm_ui$Element$width(
+					$mdgriffith$elm_ui$Element$px(100))
+				]);
+	}
+};
+var $author$project$PhotoGallery$viewThumbnail = F3(
+	function (selectedUrl, size, thumb) {
+		return A2(
+			$mdgriffith$elm_ui$Element$image,
+			A2(
+				$elm$core$List$append,
+				_Utils_eq(selectedUrl, thumb.url) ? $author$project$UI$selected : _List_Nil,
+				A2(
+					$elm$core$List$append,
+					$author$project$UI$thumbSize(size),
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$Events$onClick(
+							$author$project$PhotoGallery$ClickedPhoto(thumb.url))
+						]))),
+			{
+				description: thumb.title + (' [' + ($elm$core$String$fromInt(thumb.size) + ' KB]')),
+				src: _Utils_ap($author$project$Common$urlPrefix, thumb.url)
+			});
+	});
+var $author$project$PhotoGallery$viewLoaded = F3(
+	function (photos, selectedUrl, model) {
+		return _List_fromArray(
+			[
+				A2(
+				$mdgriffith$elm_ui$Element$Input$button,
+				$author$project$UI$button,
+				{
+					label: $mdgriffith$elm_ui$Element$text('Surprise Me!'),
+					onPress: $elm$core$Maybe$Just($author$project$PhotoGallery$ClickedSurpriseMe)
+				}),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				$author$project$UI$activity,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$text(model.activity)
+					])),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				$author$project$UI$filters,
+				_List_fromArray(
+					[
+						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidHue, 'Hue', model.hue),
+						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidRipple, 'Ripple', model.ripple),
+						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidNoise, 'Noise', model.noise)
+					])),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				$author$project$UI$h3,
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$text('Thumbnail Size:')
+					])),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				$author$project$UI$chosenSize,
+				A2(
+					$elm$core$List$map,
+					$author$project$PhotoGallery$viewSizeChooser(model.chosenSize),
+					_List_fromArray(
+						[$author$project$PhotoGallery$Small, $author$project$PhotoGallery$Medium, $author$project$PhotoGallery$Large]))),
+				A2(
+				$mdgriffith$elm_ui$Element$column,
+				$author$project$UI$thumbnails,
+				A2(
+					$elm$core$List$map,
+					A2(
+						$author$project$PhotoGallery$viewThumbnail,
+						selectedUrl,
+						$author$project$PhotoGallery$sizeToString(model.chosenSize)),
+					photos)),
+				$mdgriffith$elm_ui$Element$html(
+				A2(
+					$elm$html$Html$canvas,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$id('main-canvas'),
+							$elm$html$Html$Attributes$class('large')
+						]),
+					_List_Nil))
+			]);
+	});
+var $author$project$PhotoGallery$view = function (model) {
+	return A2(
+		$mdgriffith$elm_ui$Element$row,
+		$author$project$UI$content,
+		function () {
+			var _v0 = model.status;
+			switch (_v0.$) {
+				case 'Loaded':
+					var photos = _v0.a;
+					var selectedUrl = _v0.b;
+					return A3($author$project$PhotoGallery$viewLoaded, photos, selectedUrl, model);
+				case 'Loading':
+					return _List_Nil;
+				default:
+					var errorMessage = _v0.a;
+					return _List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$text('Error: ' + errorMessage)
+						]);
+			}
+		}());
+};
+var $mdgriffith$elm_ui$Internal$Model$ContentInfo = {$: 'ContentInfo'};
+var $mdgriffith$elm_ui$Element$Region$footer = $mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$ContentInfo);
+var $author$project$UI$footer = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$Font$color(
+		A3($mdgriffith$elm_ui$Element$rgb255, 187, 187, 187)),
+		$mdgriffith$elm_ui$Element$paddingEach(
+		{bottom: 20, left: 20, right: 20, top: 60}),
+		$mdgriffith$elm_ui$Element$Region$footer
+	]);
+var $author$project$Main$viewFooter = A2(
+	$mdgriffith$elm_ui$Element$el,
+	$author$project$UI$footer,
+	$mdgriffith$elm_ui$Element$text('One is never alone with a rubber duck. -Douglas Adams'));
+var $author$project$UI$h1 = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$Font$size(32),
+		$mdgriffith$elm_ui$Element$Font$bold,
+		$mdgriffith$elm_ui$Element$Font$color($author$project$UI$blue),
+		$mdgriffith$elm_ui$Element$paddingEach(
+		_Utils_update(
+			$author$project$UI$edges,
+			{left: 5, right: 20, top: 10}))
+	]);
 var $author$project$UI$hoverUnderline = _List_fromArray(
 	[
 		$mdgriffith$elm_ui$Element$Border$widthEach(
@@ -14411,11 +14575,10 @@ var $author$project$Main$view = function (model) {
 					$author$project$Main$GotFoldersMsg,
 					$author$project$PhotoFolders$view(model.foldersModel));
 			case 'GalleryPage':
-				return $mdgriffith$elm_ui$Element$html(
-					A2(
-						$elm$html$Html$map,
-						$author$project$Main$GotGalleryMsg,
-						$author$project$PhotoGallery$view(model.galleryModel)));
+				return A2(
+					$mdgriffith$elm_ui$Element$map,
+					$author$project$Main$GotGalleryMsg,
+					$author$project$PhotoGallery$view(model.galleryModel));
 			default:
 				return $mdgriffith$elm_ui$Element$text('Not Found');
 		}
