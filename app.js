@@ -12975,6 +12975,10 @@ var $mdgriffith$elm_ui$Element$column = F2(
 						attrs))),
 			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
 	});
+var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
+	return {$: 'Fill', a: a};
+};
+var $mdgriffith$elm_ui$Element$fill = $mdgriffith$elm_ui$Internal$Model$Fill(1);
 var $mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
 	function (a, b) {
 		return {$: 'OnlyDynamic', a: a, b: b};
@@ -13288,10 +13292,6 @@ var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
 };
 var $mdgriffith$elm_ui$Internal$Model$Top = {$: 'Top'};
 var $mdgriffith$elm_ui$Element$alignTop = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Top);
-var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
-	return {$: 'Fill', a: a};
-};
-var $mdgriffith$elm_ui$Element$fill = $mdgriffith$elm_ui$Internal$Model$Fill(1);
 var $mdgriffith$elm_ui$Internal$Model$Min = F2(
 	function (a, b) {
 		return {$: 'Min', a: a, b: b};
@@ -14152,8 +14152,8 @@ var $author$project$UI$galleryOptions = _List_fromArray(
 		_Debug_todo(
 			'UI',
 			{
-				start: {line: 288, column: 15},
-				end: {line: 288, column: 25}
+				start: {line: 287, column: 15},
+				end: {line: 287, column: 25}
 			}))
 	]);
 var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
@@ -14782,7 +14782,10 @@ var $author$project$Main$view = function (model) {
 				$author$project$UI$body,
 				A2(
 					$mdgriffith$elm_ui$Element$column,
-					_List_Nil,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+						]),
 					_List_fromArray(
 						[
 							A2($mdgriffith$elm_ui$Element$Lazy$lazy, $author$project$Main$viewHeader, model.page),

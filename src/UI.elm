@@ -105,8 +105,7 @@ nav active =
 
 hoverUnderline : List (Attribute msg)
 hoverUnderline =
-    [
-    Border.widthEach { edges | bottom = 2 }
+    [ Border.widthEach { edges | bottom = 2 }
     , Border.color   backgroundColor
     , mouseOver      [ Border.color white ]
     ]

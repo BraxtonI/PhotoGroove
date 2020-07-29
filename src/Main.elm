@@ -81,7 +81,7 @@ view model =
         [ layout
             UI.body
             ( column
-                []
+                [ width fill ]
                 [ lazy viewHeader model.page
                 , content
                 , viewFooter
