@@ -13278,34 +13278,6 @@ var $elm$core$Maybe$andThen = F2(
 			return $elm$core$Maybe$Nothing;
 		}
 	});
-var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
-	function (a, b, c, d, e) {
-		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$padding = $mdgriffith$elm_ui$Internal$Flag$flag(2);
-var $mdgriffith$elm_ui$Element$padding = function (x) {
-	var f = x;
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$padding,
-		A5(
-			$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-			'p-' + $elm$core$String$fromInt(x),
-			f,
-			f,
-			f,
-			f));
-};
-var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
-	return {$: 'Px', a: a};
-};
-var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
-var $author$project$UI$content = _List_fromArray(
-	[
-		$mdgriffith$elm_ui$Element$padding(40),
-		$mdgriffith$elm_ui$Element$width(
-		$mdgriffith$elm_ui$Element$px(960))
-	]);
 var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
 	return {$: 'AlignX', a: a};
 };
@@ -13328,6 +13300,10 @@ var $mdgriffith$elm_ui$Element$minimum = F2(
 	function (i, l) {
 		return A2($mdgriffith$elm_ui$Internal$Model$Min, i, l);
 	});
+var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
+	return {$: 'Px', a: a};
+};
+var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
 var $author$project$UI$folders = _List_fromArray(
 	[
 		$mdgriffith$elm_ui$Element$alignLeft,
@@ -13336,6 +13312,31 @@ var $author$project$UI$folders = _List_fromArray(
 		A2($mdgriffith$elm_ui$Element$minimum, 400, $mdgriffith$elm_ui$Element$fill)),
 		$mdgriffith$elm_ui$Element$width(
 		$mdgriffith$elm_ui$Element$px(360))
+	]);
+var $mdgriffith$elm_ui$Internal$Model$CenterX = {$: 'CenterX'};
+var $mdgriffith$elm_ui$Element$centerX = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$CenterX);
+var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
+	function (a, b, c, d, e) {
+		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$padding = $mdgriffith$elm_ui$Internal$Flag$flag(2);
+var $mdgriffith$elm_ui$Element$padding = function (x) {
+	var f = x;
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$padding,
+		A5(
+			$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+			'p-' + $elm$core$String$fromInt(x),
+			f,
+			f,
+			f,
+			f));
+};
+var $author$project$UI$photoFoldersContent = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$padding(40),
+		$mdgriffith$elm_ui$Element$centerX
 	]);
 var $mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
 var $mdgriffith$elm_ui$Internal$Model$asRow = $mdgriffith$elm_ui$Internal$Model$AsRow;
@@ -13712,8 +13713,6 @@ var $author$project$PhotoFolders$viewFolder = F2(
 					]));
 		}
 	});
-var $mdgriffith$elm_ui$Internal$Model$CenterX = {$: 'CenterX'};
-var $mdgriffith$elm_ui$Element$centerX = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$CenterX);
 var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
 var $mdgriffith$elm_ui$Element$Font$bold = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.bold);
 var $mdgriffith$elm_ui$Element$Font$size = function (i) {
@@ -13804,25 +13803,6 @@ var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
 };
 var $mdgriffith$elm_ui$Internal$Flag$borderStyle = $mdgriffith$elm_ui$Internal$Flag$flag(11);
 var $mdgriffith$elm_ui$Element$Border$solid = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$borderStyle, $mdgriffith$elm_ui$Internal$Style$classes.borderSolid);
-var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
-	function (a, b, c) {
-		return {$: 'SpacingStyle', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
-var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
-	function (x, y) {
-		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
-	});
-var $mdgriffith$elm_ui$Element$spacing = function (x) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$spacing,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
-			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
-			x,
-			x));
-};
 var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
 	function (a, b, c, d, e) {
 		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
@@ -13843,9 +13823,27 @@ var $author$project$UI$image = _List_fromArray(
 	[
 		$mdgriffith$elm_ui$Element$Border$width(1),
 		$mdgriffith$elm_ui$Element$Border$solid,
-		$mdgriffith$elm_ui$Element$Border$color($author$project$UI$white),
-		$mdgriffith$elm_ui$Element$spacing(5)
+		$mdgriffith$elm_ui$Element$Border$color($author$project$UI$white)
 	]);
+var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
+	function (a, b, c) {
+		return {$: 'SpacingStyle', a: a, b: b, c: c};
+	});
+var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
+var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
+	function (x, y) {
+		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
+	});
+var $mdgriffith$elm_ui$Element$spacing = function (x) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$spacing,
+		A3(
+			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
+			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
+			x,
+			x));
+};
 var $author$project$UI$relatedPhoto = A2(
 	$elm$core$List$append,
 	$author$project$UI$image,
@@ -13932,7 +13930,7 @@ var $author$project$PhotoFolders$view = function (model) {
 	}();
 	return A2(
 		$mdgriffith$elm_ui$Element$row,
-		$author$project$UI$content,
+		$author$project$UI$photoFoldersContent,
 		_List_fromArray(
 			[
 				A2(
@@ -13949,6 +13947,12 @@ var $author$project$PhotoFolders$view = function (model) {
 					[selectedPhoto]))
 			]));
 };
+var $author$project$UI$photoGalleryContent = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$padding(40),
+		$mdgriffith$elm_ui$Element$width(
+		$mdgriffith$elm_ui$Element$px(960))
+	]);
 var $author$project$PhotoGallery$ClickedSurpriseMe = {$: 'ClickedSurpriseMe'};
 var $author$project$PhotoGallery$Large = {$: 'Large'};
 var $author$project$PhotoGallery$SlidHue = function (a) {
@@ -14116,10 +14120,7 @@ var $author$project$UI$button = _List_fromArray(
 		$mdgriffith$elm_ui$Element$Font$color($author$project$UI$backgroundColor),
 		$mdgriffith$elm_ui$Element$Font$size(24),
 		$mdgriffith$elm_ui$Element$pointer,
-		$mdgriffith$elm_ui$Element$paddingEach(
-		_Utils_update(
-			$author$project$UI$edges,
-			{left: 30, right: 30, top: 10})),
+		$mdgriffith$elm_ui$Element$padding(10),
 		$mdgriffith$elm_ui$Element$mouseOver(
 		_List_fromArray(
 			[
@@ -14141,6 +14142,20 @@ var $author$project$UI$filters = _List_fromArray(
 		$mdgriffith$elm_ui$Element$px(318)),
 		$mdgriffith$elm_ui$Element$alignRight
 	]);
+var $mdgriffith$elm_ui$Element$explain = function (_v0) {
+	return $mdgriffith$elm_ui$Internal$Model$htmlClass('explain');
+};
+var $elm$core$Debug$todo = _Debug_todo;
+var $author$project$UI$galleryOptions = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$explain(
+		_Debug_todo(
+			'UI',
+			{
+				start: {line: 288, column: 15},
+				end: {line: 288, column: 25}
+			}))
+	]);
 var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
 var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
@@ -14154,11 +14169,24 @@ var $author$project$PhotoGallery$sizeToString = function (size) {
 			return 'large';
 	}
 };
+var $mdgriffith$elm_ui$Internal$Model$CenterY = {$: 'CenterY'};
+var $mdgriffith$elm_ui$Element$centerY = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$CenterY);
+var $author$project$UI$thumbnailLabel = _List_fromArray(
+	[
+		$mdgriffith$elm_ui$Element$paddingEach(
+		_Utils_update(
+			$author$project$UI$edges,
+			{bottom: 20, top: 20})),
+		$mdgriffith$elm_ui$Element$Font$color($author$project$UI$blue),
+		$mdgriffith$elm_ui$Element$Font$bold,
+		$mdgriffith$elm_ui$Element$centerY
+	]);
 var $author$project$UI$thumbnails = _List_fromArray(
 	[
 		$mdgriffith$elm_ui$Element$width(
 		$mdgriffith$elm_ui$Element$px(440)),
-		$mdgriffith$elm_ui$Element$alignLeft
+		$mdgriffith$elm_ui$Element$alignLeft,
+		$mdgriffith$elm_ui$Element$spacing(5)
 	]);
 var $elm$json$Json$Encode$int = _Json_wrap;
 var $elm$html$Html$label = _VirtualDom_node('label');
@@ -14259,122 +14287,328 @@ var $author$project$PhotoGallery$viewSizeChooser = F2(
 var $author$project$PhotoGallery$ClickedPhoto = function (a) {
 	return {$: 'ClickedPhoto', a: a};
 };
-var $author$project$UI$selected = _List_Nil;
-var $author$project$UI$thumbSize = function (size) {
-	switch (size) {
-		case 'small':
-			return _List_fromArray(
+var $author$project$UI$thumbnail = F2(
+	function (size, selected) {
+		var maxSize = function () {
+			switch (size) {
+				case 'small':
+					return 50;
+				case 'med':
+					return 100;
+				case 'large':
+					return 200;
+				default:
+					return 100;
+			}
+		}();
+		var border = selected ? _List_fromArray(
+			[
+				$mdgriffith$elm_ui$Element$Border$width(6),
+				$mdgriffith$elm_ui$Element$Border$solid,
+				$mdgriffith$elm_ui$Element$Border$color($author$project$UI$blue)
+			]) : $author$project$UI$image;
+		return _Utils_ap(
+			border,
+			_List_fromArray(
 				[
 					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(50))
-				]);
-		case 'med':
-			return _List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(100))
-				]);
-		case 'large':
-			return _List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(200))
-				]);
-		default:
-			return _List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(100))
-				]);
-	}
-};
+					$mdgriffith$elm_ui$Element$px(maxSize))
+				]));
+	});
 var $author$project$PhotoGallery$viewThumbnail = F3(
 	function (selectedUrl, size, thumb) {
 		return A2(
 			$mdgriffith$elm_ui$Element$image,
-			A2(
-				$elm$core$List$append,
-				_Utils_eq(selectedUrl, thumb.url) ? $author$project$UI$selected : _List_Nil,
+			_Utils_ap(
 				A2(
-					$elm$core$List$append,
-					$author$project$UI$thumbSize(size),
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Events$onClick(
-							$author$project$PhotoGallery$ClickedPhoto(thumb.url))
-						]))),
+					$author$project$UI$thumbnail,
+					size,
+					_Utils_eq(selectedUrl, thumb.url)),
+				_List_fromArray(
+					[
+						$mdgriffith$elm_ui$Element$Events$onClick(
+						$author$project$PhotoGallery$ClickedPhoto(thumb.url))
+					])),
 			{
 				description: thumb.title + (' [' + ($elm$core$String$fromInt(thumb.size) + ' KB]')),
 				src: _Utils_ap($author$project$Common$urlPrefix, thumb.url)
 			});
+	});
+var $mdgriffith$elm_ui$Internal$Model$Padding = F5(
+	function (a, b, c, d, e) {
+		return {$: 'Padding', a: a, b: b, c: c, d: d, e: e};
+	});
+var $mdgriffith$elm_ui$Internal$Model$Spaced = F3(
+	function (a, b, c) {
+		return {$: 'Spaced', a: a, b: b, c: c};
+	});
+var $mdgriffith$elm_ui$Internal$Model$extractSpacingAndPadding = function (attrs) {
+	return A3(
+		$elm$core$List$foldr,
+		F2(
+			function (attr, _v0) {
+				var pad = _v0.a;
+				var spacing = _v0.b;
+				return _Utils_Tuple2(
+					function () {
+						if (pad.$ === 'Just') {
+							var x = pad.a;
+							return pad;
+						} else {
+							if ((attr.$ === 'StyleClass') && (attr.b.$ === 'PaddingStyle')) {
+								var _v3 = attr.b;
+								var name = _v3.a;
+								var t = _v3.b;
+								var r = _v3.c;
+								var b = _v3.d;
+								var l = _v3.e;
+								return $elm$core$Maybe$Just(
+									A5($mdgriffith$elm_ui$Internal$Model$Padding, name, t, r, b, l));
+							} else {
+								return $elm$core$Maybe$Nothing;
+							}
+						}
+					}(),
+					function () {
+						if (spacing.$ === 'Just') {
+							var x = spacing.a;
+							return spacing;
+						} else {
+							if ((attr.$ === 'StyleClass') && (attr.b.$ === 'SpacingStyle')) {
+								var _v6 = attr.b;
+								var name = _v6.a;
+								var x = _v6.b;
+								var y = _v6.c;
+								return $elm$core$Maybe$Just(
+									A3($mdgriffith$elm_ui$Internal$Model$Spaced, name, x, y));
+							} else {
+								return $elm$core$Maybe$Nothing;
+							}
+						}
+					}());
+			}),
+		_Utils_Tuple2($elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing),
+		attrs);
+};
+var $mdgriffith$elm_ui$Internal$Model$paddingNameFloat = F4(
+	function (top, right, bottom, left) {
+		return 'pad-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(top) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(right) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(bottom) + ('-' + $mdgriffith$elm_ui$Internal$Model$floatClass(left)))))));
+	});
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $mdgriffith$elm_ui$Element$wrappedRow = F2(
+	function (attrs, children) {
+		var _v0 = $mdgriffith$elm_ui$Internal$Model$extractSpacingAndPadding(attrs);
+		var padded = _v0.a;
+		var spaced = _v0.b;
+		if (spaced.$ === 'Nothing') {
+			return A4(
+				$mdgriffith$elm_ui$Internal$Model$element,
+				$mdgriffith$elm_ui$Internal$Model$asRow,
+				$mdgriffith$elm_ui$Internal$Model$div,
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+							attrs))),
+				$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+		} else {
+			var _v2 = spaced.a;
+			var spaceName = _v2.a;
+			var x = _v2.b;
+			var y = _v2.c;
+			var newPadding = function () {
+				if (padded.$ === 'Just') {
+					var _v5 = padded.a;
+					var name = _v5.a;
+					var t = _v5.b;
+					var r = _v5.c;
+					var b = _v5.d;
+					var l = _v5.e;
+					if ((_Utils_cmp(r, x / 2) > -1) && (_Utils_cmp(b, y / 2) > -1)) {
+						var newTop = t - (y / 2);
+						var newRight = r - (x / 2);
+						var newLeft = l - (x / 2);
+						var newBottom = b - (y / 2);
+						return $elm$core$Maybe$Just(
+							A2(
+								$mdgriffith$elm_ui$Internal$Model$StyleClass,
+								$mdgriffith$elm_ui$Internal$Flag$padding,
+								A5(
+									$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
+									A4($mdgriffith$elm_ui$Internal$Model$paddingNameFloat, newTop, newRight, newBottom, newLeft),
+									newTop,
+									newRight,
+									newBottom,
+									newLeft)));
+					} else {
+						return $elm$core$Maybe$Nothing;
+					}
+				} else {
+					return $elm$core$Maybe$Nothing;
+				}
+			}();
+			if (newPadding.$ === 'Just') {
+				var pad = newPadding.a;
+				return A4(
+					$mdgriffith$elm_ui$Internal$Model$element,
+					$mdgriffith$elm_ui$Internal$Model$asRow,
+					$mdgriffith$elm_ui$Internal$Model$div,
+					A2(
+						$elm$core$List$cons,
+						$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+						A2(
+							$elm$core$List$cons,
+							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+							A2(
+								$elm$core$List$cons,
+								$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+								_Utils_ap(
+									attrs,
+									_List_fromArray(
+										[pad]))))),
+					$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
+			} else {
+				var halfY = -(y / 2);
+				var halfX = -(x / 2);
+				return A4(
+					$mdgriffith$elm_ui$Internal$Model$element,
+					$mdgriffith$elm_ui$Internal$Model$asEl,
+					$mdgriffith$elm_ui$Internal$Model$div,
+					attrs,
+					$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+						_List_fromArray(
+							[
+								A4(
+								$mdgriffith$elm_ui$Internal$Model$element,
+								$mdgriffith$elm_ui$Internal$Model$asRow,
+								$mdgriffith$elm_ui$Internal$Model$div,
+								A2(
+									$elm$core$List$cons,
+									$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.wrapped)))),
+									A2(
+										$elm$core$List$cons,
+										$mdgriffith$elm_ui$Internal$Model$Attr(
+											A2(
+												$elm$html$Html$Attributes$style,
+												'margin',
+												$elm$core$String$fromFloat(halfY) + ('px' + (' ' + ($elm$core$String$fromFloat(halfX) + 'px'))))),
+										A2(
+											$elm$core$List$cons,
+											$mdgriffith$elm_ui$Internal$Model$Attr(
+												A2(
+													$elm$html$Html$Attributes$style,
+													'width',
+													'calc(100% + ' + ($elm$core$String$fromInt(x) + 'px)'))),
+											A2(
+												$elm$core$List$cons,
+												$mdgriffith$elm_ui$Internal$Model$Attr(
+													A2(
+														$elm$html$Html$Attributes$style,
+														'height',
+														'calc(100% + ' + ($elm$core$String$fromInt(y) + 'px)'))),
+												A2(
+													$elm$core$List$cons,
+													A2(
+														$mdgriffith$elm_ui$Internal$Model$StyleClass,
+														$mdgriffith$elm_ui$Internal$Flag$spacing,
+														A3($mdgriffith$elm_ui$Internal$Model$SpacingStyle, spaceName, x, y)),
+													_List_Nil))))),
+								$mdgriffith$elm_ui$Internal$Model$Unkeyed(children))
+							])));
+			}
+		}
 	});
 var $author$project$PhotoGallery$viewLoaded = F3(
 	function (photos, selectedUrl, model) {
 		return _List_fromArray(
 			[
 				A2(
-				$mdgriffith$elm_ui$Element$Input$button,
-				$author$project$UI$button,
-				{
-					label: $mdgriffith$elm_ui$Element$text('Surprise Me!'),
-					onPress: $elm$core$Maybe$Just($author$project$PhotoGallery$ClickedSurpriseMe)
-				}),
-				A2(
 				$mdgriffith$elm_ui$Element$column,
-				$author$project$UI$activity,
+				_List_Nil,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$text(model.activity)
-					])),
-				A2(
-				$mdgriffith$elm_ui$Element$column,
-				$author$project$UI$filters,
-				_List_fromArray(
-					[
-						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidHue, 'Hue', model.hue),
-						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidRipple, 'Ripple', model.ripple),
-						A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidNoise, 'Noise', model.noise)
-					])),
-				A2(
-				$mdgriffith$elm_ui$Element$column,
-				$author$project$UI$h3,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$text('Thumbnail Size:')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Element$column,
-				$author$project$UI$chosenSize,
-				A2(
-					$elm$core$List$map,
-					$author$project$PhotoGallery$viewSizeChooser(model.chosenSize),
-					_List_fromArray(
-						[$author$project$PhotoGallery$Small, $author$project$PhotoGallery$Medium, $author$project$PhotoGallery$Large]))),
-				A2(
-				$mdgriffith$elm_ui$Element$column,
-				$author$project$UI$thumbnails,
-				A2(
-					$elm$core$List$map,
-					A2(
-						$author$project$PhotoGallery$viewThumbnail,
-						selectedUrl,
-						$author$project$PhotoGallery$sizeToString(model.chosenSize)),
-					photos)),
-				$mdgriffith$elm_ui$Element$html(
-				A2(
-					$elm$html$Html$canvas,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$id('main-canvas'),
-							$elm$html$Html$Attributes$class('large')
-						]),
-					_List_Nil))
+						A2(
+						$mdgriffith$elm_ui$Element$row,
+						$author$project$UI$activity,
+						_List_fromArray(
+							[
+								$mdgriffith$elm_ui$Element$text(model.activity)
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$row,
+						$author$project$UI$galleryOptions,
+						_List_fromArray(
+							[
+								A2(
+								$mdgriffith$elm_ui$Element$column,
+								$author$project$UI$thumbnailLabel,
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$text('Thumbnail Size:')
+									])),
+								A2(
+								$mdgriffith$elm_ui$Element$row,
+								$author$project$UI$chosenSize,
+								A2(
+									$elm$core$List$map,
+									$author$project$PhotoGallery$viewSizeChooser(model.chosenSize),
+									_List_fromArray(
+										[$author$project$PhotoGallery$Small, $author$project$PhotoGallery$Medium, $author$project$PhotoGallery$Large]))),
+								A2(
+								$mdgriffith$elm_ui$Element$column,
+								$author$project$UI$filters,
+								_List_fromArray(
+									[
+										A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidHue, 'Hue', model.hue),
+										A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidRipple, 'Ripple', model.ripple),
+										A3($author$project$PhotoGallery$viewFilter, $author$project$PhotoGallery$SlidNoise, 'Noise', model.noise)
+									])),
+								A2(
+								$mdgriffith$elm_ui$Element$Input$button,
+								$author$project$UI$button,
+								{
+									label: $mdgriffith$elm_ui$Element$text('Surprise Me!'),
+									onPress: $elm$core$Maybe$Just($author$project$PhotoGallery$ClickedSurpriseMe)
+								})
+							])),
+						A2(
+						$mdgriffith$elm_ui$Element$row,
+						_List_Nil,
+						_List_fromArray(
+							[
+								A2(
+								$mdgriffith$elm_ui$Element$wrappedRow,
+								$author$project$UI$thumbnails,
+								A2(
+									$elm$core$List$map,
+									A2(
+										$author$project$PhotoGallery$viewThumbnail,
+										selectedUrl,
+										$author$project$PhotoGallery$sizeToString(model.chosenSize)),
+									photos)),
+								$mdgriffith$elm_ui$Element$html(
+								A2(
+									$elm$html$Html$canvas,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$id('main-canvas'),
+											$elm$html$Html$Attributes$class('large')
+										]),
+									_List_Nil))
+							]))
+					]))
 			]);
 	});
 var $author$project$PhotoGallery$view = function (model) {
 	return A2(
 		$mdgriffith$elm_ui$Element$row,
-		$author$project$UI$content,
+		$author$project$UI$photoGalleryContent,
 		function () {
 			var _v0 = model.status;
 			switch (_v0.$) {

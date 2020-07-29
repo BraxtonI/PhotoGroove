@@ -100,12 +100,16 @@ view model =
                     text ""
     in
     row
-        UI.content
+        ( UI.photoFoldersContent
+        --++ [ explain Debug.todo ]
+        )
         [ column
             ( UI.folders
             )
             [ viewFolder End model.root ]
-        , column UI.selectedPhoto [ selectedPhoto ]
+        , column
+            UI.selectedPhoto
+            [ selectedPhoto ]
         ]
 
 

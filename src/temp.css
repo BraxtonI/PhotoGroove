@@ -1,9 +1,7 @@
 .large { width: 500px; float: right; }
-.selected { margin: 0; border: 6px solid #60b5cc; }
-#activate-groove { float: right; margin-right: 20px; margin-top: 15px; }
 
 
-#thumbnails, img.large, #choose-size, h3 { margin-top: 20px; }
+img.large { margin-top: 20px; }
 
 .filter-slider {
   width: 300px;

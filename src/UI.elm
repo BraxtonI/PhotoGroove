@@ -112,15 +112,10 @@ hoverUnderline =
     ]
 
 
-{--
-.content
-    margin: 40px auto;
-    width: 960px;
---}
-content : List (Attribute msg)
-content =
+photoFoldersContent : List (Attribute msg)
+photoFoldersContent =
     [ padding 40
-    , width   (px 960)
+    , centerX
     ]
 
 
@@ -153,8 +148,6 @@ folderLabel =
     , Background.color grey
     , mouseOver        [ Background.color blue ]
     , pointer
-    --, spacing          12
-    --, onLeft (el [ paddingEach { edges | top = 12, left = 12 } ]( text " " ))
     ]
 
 
@@ -243,7 +236,6 @@ image =
     [ Border.width 1
     , Border.solid
     , Border.color white
-    , spacing      5
     ]
 
 
@@ -280,6 +272,33 @@ h2 =
 
 
 {--
+.content
+    margin: 40px auto;
+    width: 960px;
+--}
+photoGalleryContent : List (Attribute msg)
+photoGalleryContent =
+    [ padding 40
+    , width (px 960)
+    ]
+
+
+galleryOptions : List (Attribute msg)
+galleryOptions =
+    [ explain Debug.todo
+    ]
+
+
+thumbnailLabel : List (Attribute msg)
+thumbnailLabel =
+    [ paddingEach { edges | top = 20, bottom = 20 }
+    , Font.color  blue
+    , Font.bold
+    , centerY
+    ]
+
+
+{--
 button
   float: right; background-color: #60b5cc; border: 0; color: rgb(44, 44, 44);
   font-size: 24px;
@@ -297,7 +316,7 @@ button =
     , Font.color       backgroundColor
     , Font.size        24
     , pointer
-    , paddingEach      { edges | top = 10, left = 30, right = 30 }
+    , padding          10
     , mouseOver        [ Background.color white ]
     ]
 
@@ -354,36 +373,47 @@ chosenSizeSpan =
 #thumbnails.small img { width: 50px; }
 #thumbnails.med img { width: 100px; }
 #thumbnails.large img { width: 200px; }
+.selected { margin: 0; border: 6px solid #60b5cc; }
 --}
 thumbnails : List (Attribute msg)
 thumbnails =
     [ width (px 440)
     , alignLeft
+    , spacing 5
     ]
 
 
-thumbSize : String -> List (Attribute msg)
-thumbSize size =
-    case size of
-        "small" ->
-            [ width (px 50) ]
+thumbnail : String -> Bool -> List (Attribute msg)
+thumbnail size selected =
+    let
+        maxSize : Int
+        maxSize =
+            case size of
+                "small" ->
+                    50
 
-        "med" ->
-            [ width (px 100) ]
+                "med" ->
+                    100
 
-        "large" ->
-            [ width (px 200) ]
+                "large" ->
+                    200
 
-        _ ->
-            [ width (px 100) ]
+                _ ->
+                    100
 
+        border : List (Attribute msg)
+        border =
+            if selected then
+                [ Border.width 6
+                , Border.solid
+                , Border.color blue
+                ]
+            else
+                image
 
-{--
-.selected { margin: 0; border: 6px solid #60b5cc; }
---}
-selected : List (Attribute msg)
-selected =
-    [
+    in
+    border ++
+    [ width (px maxSize)
     ]
 
 
@@ -399,7 +429,6 @@ footer =
     [ Font.color <| rgb255 187 187 187
     , paddingEach { top = 60, right = 20, bottom = 20, left = 20 }
     , Region.footer
---    , explain Debug.todo
     ]
 
 

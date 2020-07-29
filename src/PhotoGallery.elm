@@ -85,7 +85,7 @@ type Msg
 
 view : Model -> Element Msg
 view model =
-    row UI.content <|
+    row UI.photoGalleryContent <|
         case model.status of
             Loaded photos selectedUrl ->
                 viewLoaded photos selectedUrl model
@@ -99,48 +99,53 @@ view model =
 
 viewLoaded : List Photo -> String -> Model -> List (Element Msg)
 viewLoaded photos selectedUrl model =
-    [ Input.button
-        UI.button
-        { onPress = Just ClickedSurpriseMe
-        , label   = (text "Surprise Me!")
-        }
-    , column
-        UI.activity
-        [ text model.activity ]
-    , column
-        UI.filters
-        [ viewFilter SlidHue    "Hue"    model.hue
-        , viewFilter SlidRipple "Ripple" model.ripple
-        , viewFilter SlidNoise  "Noise"  model.noise
+    [ column
+        []
+        [ row -- Activity top right
+            UI.activity
+            [ text model.activity ]
+        , row -- First row (Size, Sliders, Button)
+            UI.galleryOptions
+            [ column
+                UI.thumbnailLabel
+                [ text "Thumbnail Size:" ]
+            , row
+                UI.chosenSize
+                (List.map (viewSizeChooser model.chosenSize) [ Small, Medium, Large ])
+            , column
+                UI.filters
+                [ viewFilter SlidHue    "Hue"    model.hue
+                , viewFilter SlidRipple "Ripple" model.ripple
+                , viewFilter SlidNoise  "Noise"  model.noise
+                ]
+            , Input.button
+                UI.button
+                { onPress = Just ClickedSurpriseMe
+                , label   = (text "Surprise Me!")
+                }
+            ]
+        , row -- Main content (Thumbnails and Canvas)
+            []
+            [ wrappedRow
+                UI.thumbnails
+                (List.map (viewThumbnail selectedUrl (sizeToString model.chosenSize)) photos)
+            , Element.html
+                (
+                    canvas
+                    [ id "main-canvas", class "large" ]
+                    []
+                )
+            ]
         ]
-    , column
-        UI.h3
-        [ text "Thumbnail Size:" ]
-    , column
-        UI.chosenSize
-        (List.map (viewSizeChooser model.chosenSize) [ Small, Medium, Large ])
-    , column
-        UI.thumbnails
-        (List.map (viewThumbnail selectedUrl (sizeToString model.chosenSize)) photos)
-    , Element.html (canvas
-        [ id "main-canvas", class "large" ]
-        [])
     ]
 
 
 viewThumbnail : String -> String -> Photo -> Element Msg
 viewThumbnail selectedUrl size thumb =
     image
-        ( List.append
-            ( if selectedUrl == thumb.url then
-                  UI.selected
-              else
-                  []
-            )
-            ( List.append
-                (UI.thumbSize size)
-                [ Events.onClick (ClickedPhoto thumb.url) ]
-            )
+        (
+            (UI.thumbnail size (selectedUrl == thumb.url))
+            ++ [ Events.onClick (ClickedPhoto thumb.url) ]
         )
         { src = (urlPrefix ++ thumb.url)
         , description = (thumb.title ++ " [" ++ String.fromInt thumb.size ++ " KB]")
