@@ -103,9 +103,7 @@ view model =
         UI.content
         [ column
             ( UI.folders
-            ++ [explain Debug.todo]
             )
-            --(List.append UI.folders [explain Debug.todo] )
             [ viewFolder End model.root ]
         , column UI.selectedPhoto [ selectedPhoto ]
         ]
@@ -114,9 +112,8 @@ view model =
 viewPhoto : String -> Element Msg
 viewPhoto url =
     link
-        ( List.append
-            UI.photo
-            [ Events.onClick (SelectPhotoUrl url) ]
+        ( UI.photo
+        ++ [ Events.onClick (SelectPhotoUrl url) ]
         )
         { url = ("/photos/" ++ url)
         , label = text url }
@@ -171,10 +168,22 @@ viewFolder path (Folder folder) =
         viewSubfolder index subfolder =
             viewFolder (appendIndex index path) subfolder
 
-        folderLabel =
+        folderLabel : Bool -> Element Msg
+        folderLabel expanded =
             el
-                (List.append UI.folderLabel [ Events.onClick (ToggleExpanded path) ])
-                ( text folder.name )
+                ( UI.folderLabel
+                ++ [ Events.onClick (ToggleExpanded path) ]
+                )
+                ( text
+                    (
+                        ( if expanded then
+                            "▸"
+                          else
+                            "▾"
+                        )
+                        ++ folder.name
+                    )
+                )
     in
     if folder.expanded then
         let
@@ -184,16 +193,17 @@ viewFolder path (Folder folder) =
                     (List.map        viewPhoto     folder.photoUrls)
         in
         column
-            UI.expanded
-            [ folderLabel
+            ( UI.cascade
+            )
+            [ folderLabel True
             , column
                 []
                 contents
             ]
     else
         column
-            UI.collapsed
-            [ folderLabel ]
+            UI.cascade
+            [ folderLabel False ]
 
 
 appendIndex : Int -> FolderPath -> FolderPath

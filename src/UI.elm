@@ -149,30 +149,18 @@ content =
 --}
 folderLabel : List (Attribute msg)
 folderLabel =
-    [ paddingEach      { edges | top = 6, left = 8, right = 8}
-    , mouseOver        [ Background.color blue ]
+    [ paddingEach      { edges | top = 6, left = 8, right = 8, bottom = 6 }
     , Background.color grey
+    , mouseOver        [ Background.color blue ]
     , pointer
+    --, spacing          12
+    --, onLeft (el [ paddingEach { edges | top = 12, left = 12 } ]( text " " ))
     ]
 
 
-expanded : List (Attribute msg)
-expanded =
-    [ onLeft
-        ( el
-            [ paddingEach { edges | left = 12 } ]
-            ( text "▸" ) --▸
-        )
-    ]
-
-
-collapsed : List (Attribute msg)
-collapsed =
-    [ onLeft
-        ( el
-            [ paddingEach { edges | left = 12 } ]
-            ( text "▾" ) --▾
-        )
+cascade : List (Attribute msg)
+cascade =
+    [ paddingEach { edges | left = 12, top = 8 }
     ]
 
 

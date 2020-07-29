@@ -13306,9 +13306,6 @@ var $author$project$UI$content = _List_fromArray(
 		$mdgriffith$elm_ui$Element$width(
 		$mdgriffith$elm_ui$Element$px(960))
 	]);
-var $mdgriffith$elm_ui$Element$explain = function (_v0) {
-	return $mdgriffith$elm_ui$Internal$Model$htmlClass('explain');
-};
 var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
 	return {$: 'AlignX', a: a};
 };
@@ -13368,7 +13365,6 @@ var $author$project$UI$selectedPhoto = _List_fromArray(
 		$mdgriffith$elm_ui$Element$width(
 		$mdgriffith$elm_ui$Element$px(600))
 	]);
-var $elm$core$Debug$todo = _Debug_todo;
 var $author$project$PhotoFolders$ToggleExpanded = function (a) {
 	return {$: 'ToggleExpanded', a: a};
 };
@@ -13390,40 +13386,6 @@ var $author$project$PhotoFolders$appendIndex = F2(
 		}
 	});
 var $author$project$UI$edges = {bottom: 0, left: 0, right: 0, top: 0};
-var $mdgriffith$elm_ui$Element$el = F2(
-	function (attrs, child) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-					attrs)),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[child])));
-	});
-var $mdgriffith$elm_ui$Internal$Model$OnLeft = {$: 'OnLeft'};
-var $mdgriffith$elm_ui$Internal$Model$Nearby = F2(
-	function (a, b) {
-		return {$: 'Nearby', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Model$NoAttribute = {$: 'NoAttribute'};
-var $mdgriffith$elm_ui$Element$createNearby = F2(
-	function (loc, element) {
-		if (element.$ === 'Empty') {
-			return $mdgriffith$elm_ui$Internal$Model$NoAttribute;
-		} else {
-			return A2($mdgriffith$elm_ui$Internal$Model$Nearby, loc, element);
-		}
-	});
-var $mdgriffith$elm_ui$Element$onLeft = function (element) {
-	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$OnLeft, element);
-};
 var $mdgriffith$elm_ui$Internal$Model$paddingName = F4(
 	function (top, right, bottom, left) {
 		return 'pad-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left)))))));
@@ -13458,34 +13420,30 @@ var $mdgriffith$elm_ui$Element$paddingEach = function (_v0) {
 				left));
 	}
 };
-var $author$project$UI$collapsed = _List_fromArray(
+var $author$project$UI$cascade = _List_fromArray(
 	[
-		$mdgriffith$elm_ui$Element$onLeft(
-		A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$paddingEach(
-					_Utils_update(
-						$author$project$UI$edges,
-						{left: 12}))
-				]),
-			$mdgriffith$elm_ui$Element$text('▾')))
+		$mdgriffith$elm_ui$Element$paddingEach(
+		_Utils_update(
+			$author$project$UI$edges,
+			{left: 12, top: 8}))
 	]);
-var $author$project$UI$expanded = _List_fromArray(
-	[
-		$mdgriffith$elm_ui$Element$onLeft(
-		A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$paddingEach(
-					_Utils_update(
-						$author$project$UI$edges,
-						{left: 12}))
-				]),
-			$mdgriffith$elm_ui$Element$text('▸')))
-	]);
+var $mdgriffith$elm_ui$Element$el = F2(
+	function (attrs, child) {
+		return A4(
+			$mdgriffith$elm_ui$Internal$Model$element,
+			$mdgriffith$elm_ui$Internal$Model$asEl,
+			$mdgriffith$elm_ui$Internal$Model$div,
+			A2(
+				$elm$core$List$cons,
+				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
+				A2(
+					$elm$core$List$cons,
+					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
+					attrs)),
+			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
+				_List_fromArray(
+					[child])));
+	});
 var $author$project$UI$blue = A3($mdgriffith$elm_ui$Element$rgb255, 96, 181, 204);
 var $author$project$UI$grey = A3($mdgriffith$elm_ui$Element$rgb255, 85, 85, 85);
 var $mdgriffith$elm_ui$Internal$Model$Hover = {$: 'Hover'};
@@ -13501,6 +13459,11 @@ var $mdgriffith$elm_ui$Internal$Model$Class = F2(
 var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
 	return {$: 'Describe', a: a};
 };
+var $mdgriffith$elm_ui$Internal$Model$Nearby = F2(
+	function (a, b) {
+		return {$: 'Nearby', a: a, b: b};
+	});
+var $mdgriffith$elm_ui$Internal$Model$NoAttribute = {$: 'NoAttribute'};
 var $mdgriffith$elm_ui$Internal$Model$TransformComponent = F2(
 	function (a, b) {
 		return {$: 'TransformComponent', a: a, b: b};
@@ -13604,13 +13567,13 @@ var $author$project$UI$folderLabel = _List_fromArray(
 		$mdgriffith$elm_ui$Element$paddingEach(
 		_Utils_update(
 			$author$project$UI$edges,
-			{left: 8, right: 8, top: 6})),
+			{bottom: 6, left: 8, right: 8, top: 6})),
+		$mdgriffith$elm_ui$Element$Background$color($author$project$UI$grey),
 		$mdgriffith$elm_ui$Element$mouseOver(
 		_List_fromArray(
 			[
 				$mdgriffith$elm_ui$Element$Background$color($author$project$UI$blue)
 			])),
-		$mdgriffith$elm_ui$Element$Background$color($author$project$UI$grey),
 		$mdgriffith$elm_ui$Element$pointer
 	]);
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
@@ -13689,8 +13652,7 @@ var $author$project$UI$photo = _List_fromArray(
 var $author$project$PhotoFolders$viewPhoto = function (url) {
 	return A2(
 		$mdgriffith$elm_ui$Element$link,
-		A2(
-			$elm$core$List$append,
+		_Utils_ap(
 			$author$project$UI$photo,
 			_List_fromArray(
 				[
@@ -13712,17 +13674,21 @@ var $author$project$PhotoFolders$viewFolder = F2(
 					A2($author$project$PhotoFolders$appendIndex, index, path),
 					subfolder);
 			});
-		var folderLabel = A2(
-			$mdgriffith$elm_ui$Element$el,
-			A2(
-				$elm$core$List$append,
-				$author$project$UI$folderLabel,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$Events$onClick(
-						$author$project$PhotoFolders$ToggleExpanded(path))
-					])),
-			$mdgriffith$elm_ui$Element$text(folder.name));
+		var folderLabel = function (expanded) {
+			return A2(
+				$mdgriffith$elm_ui$Element$el,
+				_Utils_ap(
+					$author$project$UI$folderLabel,
+					_List_fromArray(
+						[
+							$mdgriffith$elm_ui$Element$Events$onClick(
+							$author$project$PhotoFolders$ToggleExpanded(path))
+						])),
+				$mdgriffith$elm_ui$Element$text(
+					_Utils_ap(
+						expanded ? '▸' : '▾',
+						folder.name)));
+		};
 		if (folder.expanded) {
 			var contents = A2(
 				$elm$core$List$append,
@@ -13730,18 +13696,20 @@ var $author$project$PhotoFolders$viewFolder = F2(
 				A2($elm$core$List$map, $author$project$PhotoFolders$viewPhoto, folder.photoUrls));
 			return A2(
 				$mdgriffith$elm_ui$Element$column,
-				$author$project$UI$expanded,
+				$author$project$UI$cascade,
 				_List_fromArray(
 					[
-						folderLabel,
+						folderLabel(true),
 						A2($mdgriffith$elm_ui$Element$column, _List_Nil, contents)
 					]));
 		} else {
 			return A2(
 				$mdgriffith$elm_ui$Element$column,
-				$author$project$UI$collapsed,
+				$author$project$UI$cascade,
 				_List_fromArray(
-					[folderLabel]));
+					[
+						folderLabel(false)
+					]));
 		}
 	});
 var $mdgriffith$elm_ui$Internal$Model$CenterX = {$: 'CenterX'};
@@ -13969,18 +13937,7 @@ var $author$project$PhotoFolders$view = function (model) {
 			[
 				A2(
 				$mdgriffith$elm_ui$Element$column,
-				_Utils_ap(
-					$author$project$UI$folders,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$explain(
-							_Debug_todo(
-								'PhotoFolders',
-								{
-									start: {line: 106, column: 25},
-									end: {line: 106, column: 35}
-								}))
-						])),
+				$author$project$UI$folders,
 				_List_fromArray(
 					[
 						A2($author$project$PhotoFolders$viewFolder, $author$project$PhotoFolders$End, model.root)
