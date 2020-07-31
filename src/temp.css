@@ -1,17 +1,4 @@
-.large { width: 500px; float: right; }
-
-
-img.large { margin-top: 20px; }
-
-.filter-slider {
-  width: 300px;
-}
-
-.filter-slider label {
-  width: 70px;
-  display: inline-block;
-  padding-top: 5px;
-}
+canvas { border: 1px solid white; margin: 5px; }
 
 range-slider {
   width: 120px;

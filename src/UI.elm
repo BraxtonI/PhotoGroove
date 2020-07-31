@@ -277,14 +277,16 @@ h2 =
 --}
 photoGalleryContent : List (Attribute msg)
 photoGalleryContent =
-    [ padding 40
+    [ paddingEach { edges | top = 40 }
     , width (px 960)
+    , centerX
     ]
 
 
 galleryOptions : List (Attribute msg)
 galleryOptions =
-    [ explain Debug.todo
+    [ centerX
+    --, explain Debug.todo
     ]
 
 
@@ -333,18 +335,6 @@ activity =
 
 
 {--
-.filters
-  width: 318px;
-  float: right;
---}
-filters : List (Attribute msg)
-filters =
-    [ width (px 318)
-    , alignRight
-    ]
-
-
-{--
 #choose-size
   float: left;
   margin-left: 20px;
@@ -360,10 +350,29 @@ chosenSize =
     ]
 
 
-chosenSizeSpan : List(Attribute msg)
+chosenSizeSpan : List (Attribute msg)
 chosenSizeSpan =
     [ alignLeft
     , paddingEach { edges | left = 10, right = 10 }
+    ]
+
+
+{--
+.filter-slider label
+  width: 70px;
+  display: inline-block;
+  padding-top: 5px;
+--}
+filterLabel : List (Attribute msg)
+filterLabel =
+    [ width (px 70)
+    , paddingEach { edges | top = 5 }
+    ]
+
+
+filterSlider : List (Attribute msg)
+filterSlider =
+    [
     ]
 
 
@@ -378,12 +387,11 @@ thumbnails : List (Attribute msg)
 thumbnails =
     [ width (px 440)
     , alignLeft
-    , spacing 5
     ]
 
 
-thumbnail : String -> Bool -> List (Attribute msg)
-thumbnail size selected =
+thumbnailSize : String -> List (Attribute msg)
+thumbnailSize size =
     let
         maxSize : Int
         maxSize =
@@ -400,19 +408,44 @@ thumbnail size selected =
                 _ ->
                     100
 
-        border : List (Attribute msg)
-        border =
+    in
+    [ width (px maxSize)
+    ]
+
+
+borderSize : Bool -> Int
+borderSize selected =
+    if selected then
+        6
+    else
+        1
+
+
+thumbnailBorder : Bool -> List (Attribute msg)
+thumbnailBorder selected =
+    let
+        borderColor =
             if selected then
-                [ Border.width 6
-                , Border.solid
-                , Border.color blue
-                ]
+                blue
             else
-                image
+                white
 
     in
-    border ++
-    [ width (px maxSize)
+    [ Border.color borderColor
+    , Border.width (borderSize selected)
+    , Border.solid
+    ]
+
+
+thumbnailPadding : Bool -> List (Attribute msg)
+thumbnailPadding selected =
+    [ padding (7 - (borderSize selected)) ]
+
+
+canvas : List (Attribute msg)
+canvas =
+    [ width (px 500)
+    , alignRight
     ]
 
 

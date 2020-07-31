@@ -3,13 +3,8 @@ port module PhotoGallery exposing (init, Model, Msg, subscriptions, update, view
 import Browser
 import Common               exposing (urlPrefix, Photo)
 import Element              exposing (..)
-import Element.Background   as Background
-import Element.Border       as Border
 import Element.Events       as Events
-import Element.Font         as Font
 import Element.Input        as Input
-import Element.Lazy         as Lazy
-import Element.Region       as Region
 import Html                 exposing (Html, div, canvas, label, input, node)
 import Html.Attributes      as Attr exposing (checked, class, id, name, type_)
 import Html.Events          exposing (on, onClick)
@@ -100,7 +95,7 @@ view model =
 viewLoaded : List Photo -> String -> Model -> List (Element Msg)
 viewLoaded photos selectedUrl model =
     [ column
-        []
+        [ width fill ]
         [ row -- Activity top right
             UI.activity
             [ text model.activity ]
@@ -112,11 +107,14 @@ viewLoaded photos selectedUrl model =
             , row
                 UI.chosenSize
                 (List.map (viewSizeChooser model.chosenSize) [ Small, Medium, Large ])
-            , column
-                UI.filters
-                [ viewFilter SlidHue    "Hue"    model.hue
-                , viewFilter SlidRipple "Ripple" model.ripple
-                , viewFilter SlidNoise  "Noise"  model.noise
+            , row
+                [ width (px 318) ]
+                [ column
+                    [ alignRight ]
+                    [ viewFilter SlidHue    "Hue"    model.hue
+                    , viewFilter SlidRipple "Ripple" model.ripple
+                    , viewFilter SlidNoise  "Noise"  model.noise
+                    ]
                 ]
             , Input.button
                 UI.button
@@ -129,11 +127,16 @@ viewLoaded photos selectedUrl model =
             [ wrappedRow
                 UI.thumbnails
                 (List.map (viewThumbnail selectedUrl (sizeToString model.chosenSize)) photos)
-            , Element.html
-                (
-                    canvas
-                    [ id "main-canvas", class "large" ]
-                    []
+            , el
+                []--UI.image
+                (el
+                    UI.canvas
+                    (Element.html
+                        (canvas
+                            [ id "main-canvas" ]
+                            []
+                        )
+                    )
                 )
             ]
         ]
@@ -142,14 +145,24 @@ viewLoaded photos selectedUrl model =
 
 viewThumbnail : String -> String -> Photo -> Element Msg
 viewThumbnail selectedUrl size thumb =
-    image
-        (
-            (UI.thumbnail size (selectedUrl == thumb.url))
-            ++ [ Events.onClick (ClickedPhoto thumb.url) ]
+    let
+        isSelected =
+            (selectedUrl == thumb.url)
+    in
+    el
+        (UI.thumbnailPadding isSelected)
+        (el
+            (UI.thumbnailBorder isSelected)
+            (image
+                (
+                    (UI.thumbnailSize size)
+                    ++ [ Events.onClick (ClickedPhoto thumb.url) ]
+                )
+                { src = (urlPrefix ++ thumb.url)
+                , description = (thumb.title ++ " [" ++ String.fromInt thumb.size ++ " KB]")
+                }
+            )
         )
-        { src = (urlPrefix ++ thumb.url)
-        , description = (thumb.title ++ " [" ++ String.fromInt thumb.size ++ " KB]")
-        }
 
 
 viewSizeChooser : ThumbnailSize -> ThumbnailSize -> Element Msg
@@ -324,16 +337,23 @@ reload newModel =
 
 viewFilter : (Int -> Msg) -> String -> Int -> Element Msg
 viewFilter toMsg name magnitude =
-    Element.html (div [ class "filter-slider" ]
-        [ label [] [ Html.text name ]
-        , rangeSlider
-            [ Attr.max "11"
-            , Attr.property "val" (Encode.int magnitude)
-            , onSlide toMsg
-            ]
-            []
-        , label [] [ Html.text (String.fromInt magnitude) ]
-        ])
+    row
+        UI.filterSlider
+        [ el
+            UI.filterLabel
+            ( text name )
+        , Element.html
+            (rangeSlider
+                [ Attr.max "11"
+                , Attr.property "val" (Encode.int magnitude)
+                , onSlide toMsg
+                ]
+                []
+            )
+        , el
+            UI.filterLabel
+            ( text (String.fromInt magnitude) )
+        ]
 
 
 rangeSlider attributes children =
