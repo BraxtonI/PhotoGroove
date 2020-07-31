@@ -6,10 +6,10 @@ import Element              exposing (..)
 import Element.Events       as Events
 import Element.Input        as Input
 import Html                 exposing (Html, div, canvas, label, input, node)
-import Html.Attributes      as Attr exposing (checked, class, id, name, type_)
+import Html.Attributes      as Attr exposing (checked, id, name, type_)
 import Html.Events          exposing (on, onClick)
 import Http
-import Json.Decode          exposing (Decoder, at, string, int, list, succeed)
+import Json.Decode          exposing (Decoder, at, string, int, float, list, succeed)
 import Json.Decode.Pipeline exposing (optional, required)
 import Json.Encode          as Encode
 import Random
@@ -47,9 +47,9 @@ type alias Model =
     { status     : Status
     , activity   : String
     , chosenSize : ThumbnailSize
-    , hue        : Int
-    , ripple     : Int
-    , noise      : Int
+    , hue        : Float
+    , ripple     : Float
+    , noise      : Float
     }
 
 
@@ -72,9 +72,9 @@ type Msg
     | GotActivity    String
     | GotPhotos      (Result Http.Error (List Photo))
     | GotRandomPhoto Photo
-    | SlidHue        Int
-    | SlidNoise      Int
-    | SlidRipple     Int
+    | SlidHue        Float
+    | SlidNoise      Float
+    | SlidRipple     Float
 
 
 
@@ -123,18 +123,21 @@ viewLoaded photos selectedUrl model =
                 }
             ]
         , row -- Main content (Thumbnails and Canvas)
-            []
+            UI.contentWrapper
             [ wrappedRow
                 UI.thumbnails
                 (List.map (viewThumbnail selectedUrl (sizeToString model.chosenSize)) photos)
             , el
-                []--UI.image
+                []
                 (el
-                    UI.canvas
-                    (Element.html
-                        (canvas
-                            [ id "main-canvas" ]
-                            []
+                    UI.image
+                    (el
+                        UI.canvas
+                        (Element.html
+                            (canvas
+                                [ id "main-canvas" ]
+                                []
+                            )
                         )
                     )
                 )
@@ -292,9 +295,9 @@ applyFilters model =
         Loaded photos selectedUrl ->
             let
                 filters =
-                    [ { name = "Hue",    amount = toFloat model.hue    / 11 }
-                    , { name = "Ripple", amount = toFloat model.ripple / 11 }
-                    , { name = "Noise",  amount = toFloat model.noise  / 11 }
+                    [ { name = "Hue",    amount = model.hue    / 11 }
+                    , { name = "Ripple", amount = model.ripple / 11 }
+                    , { name = "Noise",  amount = model.noise  / 11 }
                     ]
 
                 url =
@@ -335,33 +338,37 @@ reload newModel =
     applyFilters newModel
 
 
-viewFilter : (Int -> Msg) -> String -> Int -> Element Msg
+viewFilter : (Float -> msg) -> String -> Float -> Element msg
 viewFilter toMsg name magnitude =
     row
         UI.filterSlider
         [ el
             UI.filterLabel
             ( text name )
-        , Element.html
-            (rangeSlider
-                [ Attr.max "11"
-                , Attr.property "val" (Encode.int magnitude)
-                , onSlide toMsg
-                ]
-                []
+        , el
+            ( UI.sliderWrapper
+            --++ [explain Debug.todo]
+            )
+            ( Input.slider
+                ( UI.slider
+                ++ [ htmlAttribute (onSlide toMsg) ] )
+                { onChange = toMsg
+                , label = Input.labelHidden "Filter Slider"
+                , min = 0
+                , max = 11
+                , value = magnitude
+                , thumb = UI.thumb
+                , step = Nothing
+                }
             )
         , el
             UI.filterLabel
-            ( text (String.fromInt magnitude) )
+            ( text (String.fromInt (round magnitude)) )
         ]
 
 
-rangeSlider attributes children =
-    node "range-slider" attributes children
-
-
-onSlide : (Int -> msg) -> Html.Attribute msg
+onSlide : (Float -> msg) -> Html.Attribute msg
 onSlide toMsg =
-    at [ "detail", "userSlidTo" ] int
-        |> Json.Decode.map toMsg
-        |> on "slide"
+    at [ "detail", "userSlidTo" ] float
+            |> Json.Decode.map toMsg
+            |> on "slide"

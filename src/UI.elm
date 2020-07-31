@@ -271,6 +271,18 @@ h2 =
 
 
 {--
+.activity
+  position: absolute;
+  top: 40px;
+  right: 100px;
+--}
+activity : List (Attribute msg)
+activity =
+    [ alignRight
+    ]
+
+
+{--
 .content
     margin: 40px auto;
     width: 960px;
@@ -286,7 +298,6 @@ photoGalleryContent =
 galleryOptions : List (Attribute msg)
 galleryOptions =
     [ centerX
-    --, explain Debug.todo
     ]
 
 
@@ -319,18 +330,6 @@ button =
     , pointer
     , padding          10
     , mouseOver        [ Background.color white ]
-    ]
-
-
-{--
-.activity
-  position: absolute;
-  top: 40px;
-  right: 100px;
---}
-activity : List (Attribute msg)
-activity =
-    [ alignRight
     ]
 
 
@@ -377,6 +376,58 @@ filterSlider =
 
 
 {--
+range-slider
+  width: 120px;
+  margin-top: 5px;
+  margin-right: 15px;
+  display: inline-block;
+
+range-slider .jsr
+  margin: 0;
+
+/* change to 1 */
+range-slider .jsr_rail-outer
+  padding: 0;
+
+/* not needed */
+range-slider .jsr_rail
+  background: none;
+
+range-slider .jsr_label
+  display: none;
+
+range-slider .jsr_slider:focus::before
+  background: rgb(96, 181, 204);
+--}
+slider : List (Attribute msg)
+slider =
+    [ width (px 120)
+    , height (px 2)
+    , Background.color white
+    ]
+
+
+sliderWrapper : List (Attribute msg)
+sliderWrapper =
+    [ paddingEach { edges | top = 7, right = 7, left = 7 }
+    ]
+
+
+thumb : Input.Thumb
+thumb =
+    Input.thumb
+        [ Element.width (px 16)
+        , Element.height (px 16)
+        , Border.rounded 8
+        , Border.width 1
+        , Border.color (rgb 0.6 0.6 0.6)
+        , Background.color (rgb 0.6 0.6 0.6)
+        , focused
+            [ Background.color blue ]
+        ]
+
+
+{--
 #thumbnails { width: 440px; float: left; clear: both; }
 #thumbnails.small img { width: 50px; }
 #thumbnails.med img { width: 100px; }
@@ -387,6 +438,7 @@ thumbnails : List (Attribute msg)
 thumbnails =
     [ width (px 440)
     , alignLeft
+    , alignTop
     ]
 
 
@@ -446,6 +498,12 @@ canvas : List (Attribute msg)
 canvas =
     [ width (px 500)
     , alignRight
+    ]
+
+
+contentWrapper : List (Attribute msg)
+contentWrapper =
+    [ paddingEach { edges | top = 10 }
     ]
 
 
